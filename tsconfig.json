@@ -6,7 +6,10 @@
     "outDir": "./lib",
     "strict": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "lib": ["es6"]
   },
   "typedocOptions": {
     "mode": "modules",
