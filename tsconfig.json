@@ -9,7 +9,23 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "lib": ["es6"]
+    "lib": ["es6", "dom"],
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@framework-like-angular/core": [
+        "packages/core/src"
+      ],
+      "@framework-like-angular/react-adapter": [
+        "packages/react-adapter/src"
+      ],
+      "@framework-like-angular/redux-adapter": [
+        "packages/react-adapter/src"
+      ],
+      "@framework-like-angular/vue-adapter": [
+        "packages/react-adapter/src"
+      ]
+    }
   },
   "typedocOptions": {
     "mode": "modules",

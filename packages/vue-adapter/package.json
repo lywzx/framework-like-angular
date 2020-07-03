@@ -5,10 +5,10 @@
   "author": "lywzx <liuyang@lyblog.net>",
   "homepage": "https://github.com/lywzx/framework-like-angular#readme",
   "license": "ISC",
-  "main": "lib/vue-adapter.js",
+  "main": "src/vue-adapter.js",
   "directories": {
-    "lib": "lib",
-    "test": "__tests__"
+    "lib": "src",
+    "test": "test"
   },
   "files": [
     "lib"

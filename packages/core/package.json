@@ -10,7 +10,7 @@
   "author": "lywzx <liuyang@lyblog.net>",
   "homepage": "https://github.com/lywzx/framework-like-angular#readme",
   "license": "MIT",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "directories": {
     "lib": "lib",
     "test": "test"
@@ -53,6 +53,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
+    "@angular/core": "^10.0.1",
     "reflect-metadata": "^0.1.13"
   }
 }

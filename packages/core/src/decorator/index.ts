@@ -1,3 +1,3 @@
 export * from './inject.decorator';
-export * from './module.decorator';
+export * from './injectable.decorator';
 export * from './optional.decorator';
