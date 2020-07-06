@@ -1,4 +1,4 @@
-import { InjectFactoryInterface } from '../interfaces';
+import { InjectConstructorInterface, InjectFactoryInterface } from '../interfaces';
 import { InjectValueInterface } from '../interfaces';
 import { InjectUseClassInterface } from '../interfaces';
 import { Constructor } from '../types';
@@ -9,15 +9,15 @@ import { keyBy } from 'lodash';
 
 type IInjectorMapValue =
   | InjectFactoryInterface<any>
-  | InjectValueInterface<any>
+  | InjectValueInterface
   | InjectUseClassInterface<any>
-  | ObjectConstructor;
+  | InjectConstructorInterface<any>;
 
 export class Injector {
   /**
    * 需要注入的配置信息
    */
-  protected readonly injectMap: Map<string | symbol | Object, IInjectorMapValue> = new Map();
+  protected readonly injectMap: Map<string | symbol | Record<string, unknown>, IInjectorMapValue> = new Map();
 
   /**
    * 实例化之后，开成单例模式的内容
@@ -53,7 +53,7 @@ export class Injector {
           if (typeof item === 'string' || typeof item === 'symbol') {
             return this.getValueFromMappingWithException(item);
           }
-          return item as ObjectConstructor;
+          return item as InjectConstructorInterface<any>;
         });
       } else {
         return [];
@@ -89,7 +89,7 @@ export class Injector {
     });
   }
 
-  private getValueFromMappingWithException(key: string | symbol | ObjectConstructor): IInjectorMapValue {
+  private getValueFromMappingWithException(key: string | symbol | any): IInjectorMapValue {
     const injectMapping = this.injectMap.get(key);
     if (injectMapping) {
       return injectMapping;
@@ -182,7 +182,7 @@ export class Injector {
       if ('token' in provider) {
         this.injectMap.set(provider.token, provider);
       } else {
-        this.injectMap.set(provider, provider);
+        this.injectMap.set(provider as Record<string, any>, provider as InjectConstructorInterface<any>);
       }
     });
   }

@@ -5,10 +5,14 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import { addBindings } from '../util/bindings';
 import { InjectFactoryInterface, InjectUseClassInterface, InjectValueInterface } from '@framework-like-angular/core';
 import { Injector } from '@framework-like-angular/core';
+import { InjectConstructorInterface } from '@framework-like-angular/core';
 
 export type ModuleOptions = {
   provider?: Array<
-    InjectFactoryInterface<any> | InjectUseClassInterface<any> | InjectValueInterface<any> | ObjectConstructor
+    | InjectFactoryInterface<any>
+    | InjectUseClassInterface<any>
+    | InjectValueInterface<any>
+    | InjectConstructorInterface<any>
   >;
 };
 
@@ -17,7 +21,7 @@ export type ModuleOptions = {
  * @constructor
  */
 export function Module(options?: ModuleOptions) {
-  return function ModuleDecorator(Wrapped: any) {
+  return function ModuleDecorator(Wrapped: any): any {
     const injector = new Injector();
 
     /** @type {Map<Token, Function>} */
