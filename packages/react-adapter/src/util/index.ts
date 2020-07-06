@@ -1,8 +1,7 @@
-import {Injector} from "@framework-like-angular/core";
+import { Injector } from '@framework-like-angular/core';
 
 /* istanbul ignore next */
-export const INJECTOR = typeof Symbol === "function" ? Symbol() : "__injector__";
-
+export const INJECTOR = typeof Symbol === 'function' ? Symbol() : '__injector__';
 
 let currentInjector: Injector | null = null;
 

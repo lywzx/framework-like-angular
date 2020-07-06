@@ -1,19 +1,15 @@
-import React  from "react";
-import {AddTodo} from "./components/add-todo";
-import {TodoListPage} from "./routes/todo-list-page";
-import {Footer} from "./components/footer";
-import {
-  Switch,
-  Route,
-} from "react-router-dom";
-import {
-  Module
-} from '@framework-like-angular/react-adapter';
+import React from 'react';
+import { AddTodo } from './components/add-todo';
+import { TodoListPage } from './routes/todo-list-page';
+import { Footer } from './components/footer';
+import { Switch, Route } from 'react-router-dom';
+import { Module } from '@framework-like-angular/react-adapter';
+import { TodoService } from '../services/todo.service';
 
 @Module({
-  provider: []
+  provider: [TodoService],
 })
-export class App extends React.Component<any, any>  {
+export class App extends React.Component<any, any> {
   render() {
     return (
       <React.Fragment>
@@ -32,15 +28,21 @@ export class App extends React.Component<any, any>  {
               </Route>
             </Switch>
           </section>
-          <Footer/>
+          <Footer />
         </section>
         <footer className="info">
           <p>Double-click to edit a todo</p>
-          <p>Template by <a href="http://sindresorhus.com">Sindre Sorhus</a></p>
-          <p>Created by <a href="http://todomvc.com">you</a></p>
-          <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+          <p>
+            Template by <a href="http://sindresorhus.com">Sindre Sorhus</a>
+          </p>
+          <p>
+            Created by <a href="http://todomvc.com">you</a>
+          </p>
+          <p>
+            Part of <a href="http://todomvc.com">TodoMVC</a>
+          </p>
         </footer>
       </React.Fragment>
-    )
+    );
   }
 }

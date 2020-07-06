@@ -1,6 +1,6 @@
-import React from "react";
-import {Todo} from "./todo";
-import {TodoInterface} from "../interfaces/todo.interface";
+import React from 'react';
+import { Todo } from './todo';
+import { TodoInterface } from '../interfaces/todo.interface';
 
 export interface ITodoListPropsInterface {
   todos: TodoInterface[];

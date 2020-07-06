@@ -1,11 +1,9 @@
-import {
-  isArray
-} from 'lodash';
-import {Token} from "./helper";
-import {INJECTOR} from "./index";
+import { isArray } from 'lodash';
+import { Token } from './helper';
+import { INJECTOR } from './index';
 
 /* istanbul ignore next */
-const IS_BINDING = typeof Symbol === "function" ? Symbol() : "__binding__";
+const IS_BINDING = typeof Symbol === 'function' ? Symbol() : '__binding__';
 
 /**
  * Add bindings to bindings Map
@@ -26,7 +24,6 @@ export function addBindings(bindingMap: Map<Token, Function>, definitions: any[]
   });
 }
 
-
 export function toClass(constructor: any) {
   return asBinding((injector: any) => {
     const instance = new constructor();
@@ -36,7 +33,6 @@ export function toClass(constructor: any) {
     return instance;
   });
 }
-
 
 /**
  * Mark function as binding function.

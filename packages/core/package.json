@@ -36,21 +36,8 @@
     "url": "https://github.com/lywzx/framework-like-angular/issues"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.9",
     "@types/lodash": "^4.14.155",
-    "@types/mocha": "^7.0.1",
-    "@typescript-eslint/eslint-plugin": "^2.20.0",
-    "@typescript-eslint/parser": "^2.20.0",
-    "chai": "^4.2.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "lodash": "^4.17.15",
-    "mocha": "^7.0.1",
-    "prettier": "^1.19.1",
-    "ts-node": "^8.6.2",
-    "tsconfig-paths": "^3.9.0",
-    "typescript": "^3.8.2"
+    "lodash": "^4.17.15"
   },
   "dependencies": {
     "@angular/core": "^10.0.1",

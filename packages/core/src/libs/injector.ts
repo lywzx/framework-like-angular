@@ -1,28 +1,31 @@
-import {InjectFactoryInterface} from "../interfaces";
-import {InjectValueInterface} from "../interfaces";
-import {InjectUseClassInterface} from "../interfaces";
-import {Constructor} from "../types";
-import {CircleDependenceException, NotInjectableException} from "../exceptions";
-import {INJECTABLE, injectKey} from "../decorator";
-import {FactoryFunctionInjectInterface} from "../interfaces/factory-function-inject.interfact";
-import { keyBy} from 'lodash';
+import { InjectFactoryInterface } from '../interfaces';
+import { InjectValueInterface } from '../interfaces';
+import { InjectUseClassInterface } from '../interfaces';
+import { Constructor } from '../types';
+import { CircleDependenceException, NotInjectableException } from '../exceptions';
+import { INJECTABLE, injectKey } from '../decorator';
+import { FactoryFunctionInjectInterface } from '../interfaces/factory-function-inject.interfact';
+import { keyBy } from 'lodash';
 
-
-type IInjectorMapValue = InjectFactoryInterface<any> |InjectValueInterface<any>| InjectUseClassInterface<any> | ObjectConstructor;
+type IInjectorMapValue =
+  | InjectFactoryInterface<any>
+  | InjectValueInterface<any>
+  | InjectUseClassInterface<any>
+  | ObjectConstructor;
 
 export class Injector {
-
   /**
    * 需要注入的配置信息
    */
-  protected readonly injectMap: Map<string | Symbol | Object, IInjectorMapValue> = new Map();
+  protected readonly injectMap: Map<string | symbol | Object, IInjectorMapValue> = new Map();
 
   /**
    * 实例化之后，开成单例模式的内容
    */
-  protected readonly instanceMap: Map<string | Symbol | Object, any> = new Map<string|Symbol|Object, any>();
-
-  constructor() {}
+  protected readonly instanceMap: Map<string | symbol | Record<string, unknown>, any> = new Map<
+    string | symbol | Record<string, unknown>,
+    any
+  >();
 
   public get(token: any): any {
     return this.factory(token);
@@ -33,12 +36,12 @@ export class Injector {
    * @param realTarget
    * @param fn
    */
-  protected cachedFactory(realTarget: any, fn: Function) {
+  protected cachedFactory(realTarget: any, fn: () => void) {
     const instance = this.instanceMap.get(realTarget);
     if (instance) {
       return instance;
     }
-    let getInstance = fn();
+    const getInstance = fn();
     this.instanceMap.set(realTarget, getInstance);
     return getInstance;
   }
@@ -46,7 +49,7 @@ export class Injector {
   protected getNeedInjectParams<T>(target: Constructor<T> | InjectFactoryInterface<T>): Array<IInjectorMapValue> {
     if ('factory' in target) {
       if (target.inject) {
-        return target.inject.map((item) => {
+        return target.inject.map(item => {
           if (typeof item === 'string' || typeof item === 'symbol') {
             return this.getValueFromMappingWithException(item);
           }
@@ -65,7 +68,6 @@ export class Injector {
 
     return inject.map((value: any, index: number) => {
       if (paramInject && paramInject[index]) {
-
         // 可能直接传入了构造函数
         const use = paramInject[index].use;
 
@@ -77,8 +79,8 @@ export class Injector {
         if (injectMapping) {
           return {
             __inject: true,
-            use: injectMapping
-          }
+            use: injectMapping,
+          };
         } else {
           throw new NotInjectableException(paramInject[index].use);
         }
@@ -87,7 +89,7 @@ export class Injector {
     });
   }
 
-  private getValueFromMappingWithException(key: string | symbol | ObjectConstructor ): IInjectorMapValue {
+  private getValueFromMappingWithException(key: string | symbol | ObjectConstructor): IInjectorMapValue {
     const injectMapping = this.injectMap.get(key);
     if (injectMapping) {
       return injectMapping;
@@ -98,91 +100,90 @@ export class Injector {
     }
   }
 
+  protected factory<T>(
+    target: Constructor<T> | FactoryFunctionInjectInterface<T>,
+    reference?: Constructor<T> | FactoryFunctionInjectInterface<T>,
+    deps: any[] = []
+  ): T {
+    let realTarget: Constructor<T> | InjectFactoryInterface<T> | undefined;
 
+    if ((target as FactoryFunctionInjectInterface<T>).__inject) {
+      const use = (target as FactoryFunctionInjectInterface<T>).use;
 
-  protected factory<T>(target: Constructor<T> | FactoryFunctionInjectInterface<T>, reference?: Constructor<T> | FactoryFunctionInjectInterface<T>, deps: any[] = []): T {
-      let realTarget: Constructor<T> | InjectFactoryInterface<T> | undefined;
-
-      if ((target as FactoryFunctionInjectInterface<T>).__inject) {
-        const use = (target as FactoryFunctionInjectInterface<T>).use;
-
-        if ( 'useValue' in use) {
-          return use.useValue as T;
-        }
-
-        if ('factory' in use) {
-          realTarget = use;
-        }
-
-        if ('useClass' in use) {
-          realTarget = use.useClass;
-        }
-      }
-      if (realTarget === undefined) {
-        realTarget = target as Constructor<T>;
+      if ('useValue' in use) {
+        return use.useValue as T;
       }
 
-      return this.cachedFactory(realTarget, () => {
-        const innerTarget = realTarget as Constructor<T> | InjectFactoryInterface<T>;
-        if (deps.includes(target)) {
-          let targetName = '';
-          if ('name' in target) {
-            targetName = target.name;
-          }
-          throw new CircleDependenceException(targetName || target.toString(), deps[deps.length - 1]);
+      if ('factory' in use) {
+        realTarget = use;
+      }
+
+      if ('useClass' in use) {
+        realTarget = use.useClass;
+      }
+    }
+    if (realTarget === undefined) {
+      realTarget = target as Constructor<T>;
+    }
+
+    return this.cachedFactory(realTarget, () => {
+      const innerTarget = realTarget as Constructor<T> | InjectFactoryInterface<T>;
+      if (deps.includes(target)) {
+        let targetName = '';
+        if ('name' in target) {
+          targetName = target.name;
         }
+        throw new CircleDependenceException(targetName || target.toString(), deps[deps.length - 1]);
+      }
 
-        if (!('factory' in innerTarget) && !Reflect.getMetadata(INJECTABLE, innerTarget)) {
-          let referenceMessage = undefined;
-          if (reference) {
-            if ('__inject' in target) {
-              referenceMessage = 'variable';
-            } else if ('name' in reference) {
-              referenceMessage = reference.name;
-            }
+      if (!('factory' in innerTarget) && !Reflect.getMetadata(INJECTABLE, innerTarget)) {
+        let referenceMessage = undefined;
+        if (reference) {
+          if ('__inject' in target) {
+            referenceMessage = 'variable';
+          } else if ('name' in reference) {
+            referenceMessage = reference.name;
           }
-          throw new NotInjectableException(innerTarget.name, referenceMessage);
         }
+        throw new NotInjectableException(innerTarget.name, referenceMessage);
+      }
 
-        // 获取target类的构造函数参数providers
-        const providers = this.getNeedInjectParams(innerTarget);
+      // 获取target类的构造函数参数providers
+      const providers = this.getNeedInjectParams(innerTarget);
 
-        if (!providers.length) {
-          let targetResult;
-          if ('factory' in innerTarget) {
-            targetResult = innerTarget.factory();
-          } else {
-            targetResult = Reflect.construct(innerTarget, []);
-          }
-          return targetResult;
-        }
-
-        // 将参数依次实例化
-        const args = providers.map((provider) => {
-          return this.get(provider);
-        });
-
-        // 将实例化的数组作为target类的参数，并返回target的实例
+      if (!providers.length) {
         let targetResult;
-        if ('factory' in innerTarget ) {
-          targetResult = innerTarget.factory(...args);
+        if ('factory' in innerTarget) {
+          targetResult = innerTarget.factory();
         } else {
-          targetResult = Reflect.construct(innerTarget, args);
+          targetResult = Reflect.construct(innerTarget, []);
         }
         return targetResult;
+      }
+
+      // 将参数依次实例化
+      const args = providers.map(provider => {
+        return this.get(provider);
       });
 
+      // 将实例化的数组作为target类的参数，并返回target的实例
+      let targetResult;
+      if ('factory' in innerTarget) {
+        targetResult = innerTarget.factory(...args);
+      } else {
+        targetResult = Reflect.construct(innerTarget, args);
+      }
+      return targetResult;
+    });
   }
 
-
   public provide(...providers: IInjectorMapValue[]): void {
-    providers.forEach((provider) => {
+    providers.forEach(provider => {
       if ('token' in provider) {
         this.injectMap.set(provider.token, provider);
       } else {
         this.injectMap.set(provider, provider);
       }
-    })
+    });
   }
-
 }

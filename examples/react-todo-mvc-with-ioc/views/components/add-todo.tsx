@@ -1,17 +1,13 @@
-import React, {Component, KeyboardEvent} from "react";
-import {connect} from "react-redux";
-import {AnyAction, Dispatch} from "redux";
-import {addTodo as addTodoAction} from "../../store/actions";
+import React, { Component, KeyboardEvent } from 'react';
+import { connect } from 'react-redux';
+import { addTodo as addTodoAction } from '../../store/actions';
 
-export class AddTodoComponent extends Component<any, any>{
-
+export class AddTodoComponent extends Component<any, any> {
   private onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    const {
-      dispatch
-    } = this.props;
+    const { dispatch } = this.props;
     const code = e.key;
     const input = e.currentTarget;
-    debugger
+    debugger;
     if (code === 'Enter' && input.value) {
       dispatch(addTodoAction(input.value));
       input.value = '';
@@ -27,6 +23,5 @@ export class AddTodoComponent extends Component<any, any>{
     );
   }
 }
-
 
 export const AddTodo = connect()(AddTodoComponent);

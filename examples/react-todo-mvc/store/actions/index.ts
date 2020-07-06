@@ -12,18 +12,18 @@ export const TOGGLE_TODO_LIST_COMPLETE_STATE = 'TOGGLE_TODO_LIST_COMPLETE_STATE'
  * action creators
  */
 export function addTodo(text: string) {
-  return { type: ADD_TODO, text }
+  return { type: ADD_TODO, text };
 }
 
 export function toggleTodo(id: number) {
-  return { type: TOGGLE_TODO, id }
+  return { type: TOGGLE_TODO, id };
 }
 
 export function deleteTodo(id: number) {
   return {
     type: DELETE_TODO,
     id,
-  }
+  };
 }
 
 export function changeTodo(id: number, text: string) {
@@ -31,18 +31,18 @@ export function changeTodo(id: number, text: string) {
     type: CHANGE_TODO,
     id,
     text,
-  }
+  };
 }
 
 export function clearCompletedTodo() {
   return {
-    type: CLEAR_COMPLETED_TODO
-  }
+    type: CLEAR_COMPLETED_TODO,
+  };
 }
 
 export function toggleTodoListCompleteState(completed: boolean) {
   return {
     type: TOGGLE_TODO_LIST_COMPLETE_STATE,
     completed,
-  }
+  };
 }

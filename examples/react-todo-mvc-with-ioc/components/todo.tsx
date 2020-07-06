@@ -1,4 +1,4 @@
-import React, {useState, KeyboardEvent, MouseEvent } from "react";
+import React, { useState, KeyboardEvent, MouseEvent } from 'react';
 import classNames from 'classnames';
 
 export interface ITodoItemPropsInterface {
@@ -10,7 +10,7 @@ export interface ITodoItemPropsInterface {
 }
 
 let uniqId = 1;
-export function Todo({onToggleComplete, completed, text, onTodoDelete, onTodoEdit}: ITodoItemPropsInterface) {
+export function Todo({ onToggleComplete, completed, text, onTodoDelete, onTodoEdit }: ITodoItemPropsInterface) {
   const [editAble, setEditAble] = useState(false);
   let inputRef: HTMLInputElement | null = null;
 
@@ -21,7 +21,7 @@ export function Todo({onToggleComplete, completed, text, onTodoDelete, onTodoEdi
 
   const onDbClick = (e: MouseEvent) => {
     if (completed) {
-      return ;
+      return;
     }
     e.preventDefault();
     setEditAble(!editAble);
@@ -30,26 +30,34 @@ export function Todo({onToggleComplete, completed, text, onTodoDelete, onTodoEdi
         inputRef.focus();
       }
     });
-  }
+  };
 
   const onKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && inputRef) {
       setEditAble(!editAble);
       onTodoEdit(inputRef.value);
     }
-  }
+  };
   const id = `random-id${uniqId++}`;
 
   return (
-    <li className={liClassName} >
+    <li className={liClassName}>
       <div className="view">
-        <input id={id} className="toggle" type="checkbox" checked={completed} onChange={(e) => {
-          onToggleComplete(e.currentTarget.checked);
-        }} />
-        <label htmlFor={id} onDoubleClick={onDbClick}>{text}</label>
+        <input
+          id={id}
+          className="toggle"
+          type="checkbox"
+          checked={completed}
+          onChange={e => {
+            onToggleComplete(e.currentTarget.checked);
+          }}
+        />
+        <label htmlFor={id} onDoubleClick={onDbClick}>
+          {text}
+        </label>
         <button className="destroy" onClick={onTodoDelete}></button>
       </div>
-      <input ref={(r) => inputRef = r} className="edit" defaultValue={text} onKeyPress={onKeyPress}  />
+      <input ref={r => (inputRef = r)} className="edit" defaultValue={text} onKeyPress={onKeyPress} />
     </li>
   );
 }

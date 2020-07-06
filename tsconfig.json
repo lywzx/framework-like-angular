@@ -27,6 +27,7 @@
       ]
     }
   },
+  "include": ["packages", "examples"],
   "typedocOptions": {
     "mode": "modules",
     "out": "apidocs"

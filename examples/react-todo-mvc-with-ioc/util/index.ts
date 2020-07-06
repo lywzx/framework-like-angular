@@ -1,4 +1,4 @@
-import {TodoInterface} from "../interfaces/todo.interface";
+import { TodoInterface } from '../interfaces/todo.interface';
 
 export function filterTodoByRouteName(todos: TodoInterface[], routeName: string) {
   if (routeName === '/active') {

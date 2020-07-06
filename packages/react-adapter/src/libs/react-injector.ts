@@ -1,3 +1,1 @@
-export class ReactInjector {
-
-}
+export class ReactInjector {}
