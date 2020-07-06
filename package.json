@@ -6,7 +6,7 @@
   ],
   "scripts": {
     "start": "node examples/server.js",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
+    "format": "prettier --write \"packages/**/*.ts\" \"packages/**/*.tsx\" \"examples/**/*.ts\" \"examples/**/*.tsx\"",
     "lint": "eslint \"{packages,examples}/**/*.{ts,tsx}\" --fix",
     "lint-staged": "lint-staged"
   },
