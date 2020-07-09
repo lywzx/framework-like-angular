@@ -40,7 +40,6 @@
     "lodash": "^4.17.15"
   },
   "dependencies": {
-    "@angular/core": "^10.0.1",
     "reflect-metadata": "^0.1.13"
   }
 }

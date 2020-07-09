@@ -20,10 +20,10 @@
         "packages/react-adapter/src"
       ],
       "@framework-like-angular/redux-adapter": [
-        "packages/react-adapter/src"
+        "packages/redux-adapter/src"
       ],
       "@framework-like-angular/vue-adapter": [
-        "packages/react-adapter/src"
+        "packages/vue-adapter/src"
       ]
     }
   },

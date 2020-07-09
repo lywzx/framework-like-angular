@@ -1,16 +1,18 @@
 import { Inject, Injectable, OnModuleInitInterface } from '@framework-like-angular/core';
-import { MODULE_ROOT_APP_COMPONENT } from '../decorator';
-import { Component } from 'react';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { MODULE_ROOT_APP_COMPONENT } from '../constant';
 
 @Injectable
 export class AppInitService implements OnModuleInitInterface {
-  constructor(@Inject(MODULE_ROOT_APP_COMPONENT) protected App: Component) {}
+  constructor(@Inject(MODULE_ROOT_APP_COMPONENT) protected App: typeof Component) {}
 
   onModuleInit(): void {
     this.renderApp();
   }
 
   renderApp() {
-    ReactDOM.render(this.App, document.getElementById('root'));
+    const App = this.App;
+    ReactDOM.render(<App />, document.getElementById('root'));
   }
 }

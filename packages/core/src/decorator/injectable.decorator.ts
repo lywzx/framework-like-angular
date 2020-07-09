@@ -1,8 +1,8 @@
 import 'reflect-metadata';
-import { Constructor } from '../types';
+import { Type } from '../interfaces';
 
-export const INJECTABLE = Symbol('INJECTABLE');
+export const INJECTABLEKEY = Symbol('INJECTABLE');
 
-export function Injectable(target: Constructor) {
-  Reflect.defineMetadata(INJECTABLE, true, target);
+export function Injectable<T>(target: Type<T>) {
+  Reflect.defineMetadata(INJECTABLEKEY, true, target);
 }

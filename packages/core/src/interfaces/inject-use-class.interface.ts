@@ -1,6 +1,6 @@
-import { Constructor } from '../types';
 import { InjectBaseInterface } from './inject-base.interface';
+import { Type } from './type';
 
 export interface InjectUseClassInterface<T> extends InjectBaseInterface {
-  useClass: Constructor<T>;
+  useClass: Type<T>;
 }

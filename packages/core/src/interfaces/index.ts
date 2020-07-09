@@ -1,4 +1,6 @@
 export * from './inject-factory.interface';
 export * from './inject-use-class.interface';
 export * from './inject-value.interface';
-export * from './inject-constructor.interface';
+export * from './type';
+export * from './module-options.interface';
+export * from './on-module-init.interface';

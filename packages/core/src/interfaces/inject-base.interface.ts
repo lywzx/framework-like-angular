@@ -1,3 +1,5 @@
+import { Type } from '@framework-like-angular/core';
+
 export interface InjectBaseInterface {
-  token: string | any;
+  token: string | symbol | Type<any>;
 }

@@ -3,37 +3,42 @@ import { createElement } from 'react';
 import { InjectorComponent, InjectorContext } from '../components/injector.component';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { addBindings } from '../util/bindings';
-import { InjectFactoryInterface, InjectUseClassInterface, InjectValueInterface } from '@framework-like-angular/core';
-import { Injector } from '@framework-like-angular/core';
-import { InjectConstructorInterface } from '@framework-like-angular/core';
+import { ModuleOptionsInterface, Module as ModuleCore, Type, MODULE_INIT } from '@framework-like-angular/core';
+import { AppInitService } from '../services/app-init.services';
+import { MODULE_ROOT_APP_COMPONENT } from '../constant';
 
-export type ModuleOptions = {
-  provider?: Array<
-    | InjectFactoryInterface<any>
-    | InjectUseClassInterface<any>
-    | InjectValueInterface<any>
-    | InjectConstructorInterface<any>
-  >;
-};
+interface ModuleOptions extends ModuleOptionsInterface {
+  anchor: string;
+}
+
+class ModuleTemplate {}
 
 /**
  * @param options
  * @constructor
  */
 export function Module(options?: ModuleOptions) {
-  return function ModuleDecorator(Wrapped: any): any {
-    const injector = new Injector();
-
+  const moduleCallback = ModuleCore({
+    ...options,
+    provider: [
+      {
+        token: MODULE_INIT,
+        useClass: AppInitService,
+      },
+      ...((options && options.provider) || []),
+    ],
+  });
+  return function ModuleDecorator(Wrapped: Type<any>): any {
     /** @type {Map<Token, Function>} */
     const bindingMap: any = new Map<any, any>();
 
-    injector.provide(...((options && options.provider) || []));
+    const module = new (moduleCallback(ModuleTemplate))();
 
     // ts-ignore
     class Provider<P, S> extends InjectorComponent<P, S> {
       private _parent = this.context;
 
-      private _injector = injector;
+      private _injector = module.injector;
 
       private _instanceMap = new Map();
 
@@ -63,6 +68,15 @@ export function Module(options?: ModuleOptions) {
     Provider.contextType = InjectorContext;
 
     // static fields from component should be visible on the generated Consumer
-    return hoistNonReactStatics(Provider, Wrapped);
+    const ret = hoistNonReactStatics(Provider, Wrapped);
+    if (options && options.anchor) {
+      module.injector.provide({
+        token: MODULE_ROOT_APP_COMPONENT,
+        useValue: ret,
+      });
+      module.init();
+    }
+
+    return ret;
   };
 }
