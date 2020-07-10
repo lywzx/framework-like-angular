@@ -1,7 +1,9 @@
-import { createStore } from 'redux';
+import { combineReducers, createStore } from 'redux';
 import { TodoInterface } from '../interfaces/todo.interface';
 import { createHashHistory } from 'history';
-import createRootReducer from './reducers';
+import { ReduxModule } from '@framework-like-angular/redux-adapter';
+import { ReduxStoreModule } from './redux-store-module';
+import { connectRouter } from 'connected-react-router';
 
 export const history = createHashHistory({
   basename: '',
@@ -13,7 +15,12 @@ export interface StateInterface {
   todos: TodoInterface[];
 }
 
-export const store = createStore(
-  createRootReducer(history),
-  w.__REDUX_DEVTOOLS_EXTENSION__ && w.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const initReducer = {
+  router: connectRouter(history),
+};
+
+export const StoreModule = ReduxModule.forRoot({
+  reducers: initReducer,
+  store: createStore(combineReducers(initReducer), w.__REDUX_DEVTOOLS_EXTENSION__ && w.__REDUX_DEVTOOLS_EXTENSION__()),
+  imports: [ReduxStoreModule],
+});

@@ -13,7 +13,7 @@ export function Inject<T>(inject?: string | Type<T> | symbol) {
 
       Object.defineProperty(target, injectorKey, {
         get(): any {
-          return this.context._injector;
+          return this.context._module;
         },
       });
     }

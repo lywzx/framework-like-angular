@@ -9,6 +9,7 @@ import {
 } from '../decorator';
 import { keyBy } from 'lodash';
 import { getInjectName } from '../util';
+import {getProviders} from "../util/tools";
 
 export class Injector {
   /**
@@ -206,7 +207,7 @@ export class Injector {
   }
 
   public provide(...providers: IInjectorMapValue<any>[]): void {
-    providers.forEach(provider => {
+    getProviders(providers).forEach(provider => {
       if ('token' in provider) {
         this.injectMap.set(provider.token, provider);
       } else {

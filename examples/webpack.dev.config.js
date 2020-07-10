@@ -18,7 +18,7 @@ module.exports = {
             entries[dir] = ['webpack-hot-middleware/client', entry];
         }
 
-        entry = path.join(fullDir, 'app.ts');
+        entry = path.join(fullDir, 'app.tsx');
         if (fs.statSync(fullDir).isDirectory() && fs.existsSync(entry)) {
             entries[dir] = ['webpack-hot-middleware/client', entry];
         }
