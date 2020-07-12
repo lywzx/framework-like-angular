@@ -5,7 +5,7 @@ import { InnerModule } from '@framework-like-angular/core';
 import { ACTION_CONSTANT, REDUCER_CONSTANT, STATE_CONSTANT } from '../decorator';
 import { keyBy } from 'lodash';
 
-@Injectable
+@Injectable()
 export class ReduxBootstrapService implements OnModuleInitInterface {
   constructor(
     @Inject(REDUX_SERVICE_TOKEN) protected services: any[],
@@ -47,17 +47,7 @@ export class ReduxBootstrapService implements OnModuleInitInterface {
       // 构建reducer
       if (reducerOptions && reducerOptions.stateName && reducers.length) {
         const reducersKeyBy = keyBy(reducers, 'type');
-        /*const fns = reducers.map((item) => {
-          const keyBy = keyBy(item.name)
-          return function (state: any, action: Action) {
-            if (action.type === item.type) {
-              return instance[item.name](state, action);
-            }
-            return state;
-          };
-        });*/
         initReducer[reducerOptions.stateName] = (state: any = reducerOptions.defaultState, action: AnyAction) => {
-          debugger
           if (action.type in reducersKeyBy) {
             return instance[reducersKeyBy[action.type]['name']](state, action);
           }
@@ -65,7 +55,6 @@ export class ReduxBootstrapService implements OnModuleInitInterface {
         };
       }
     });
-debugger
     this.store.replaceReducer(
       combineReducers({
         ...this.reducers,

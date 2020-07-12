@@ -1,14 +1,15 @@
+import { Inject, Injectable } from '@framework-like-angular/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { FooterLink } from '../../components/footerLink';
 import { filterTodoByRouteName } from '../../util';
-import { Inject } from '@framework-like-angular/react-adapter';
 import { TodoService } from '../../services/todo.service';
 
 interface IFooterInterface {
   total: number;
 }
 
+@Injectable()
 export class footer extends React.Component<IFooterInterface, any> {
   @Inject() public todoService!: TodoService;
 

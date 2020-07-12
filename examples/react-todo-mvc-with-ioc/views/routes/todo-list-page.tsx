@@ -1,16 +1,17 @@
+import { Inject, Injectable } from '@framework-like-angular/core';
 import { connect } from 'react-redux';
 import React from 'react';
 import { TodoInterface } from '../../interfaces/todo.interface';
 import { TodoList } from '../../components/todo-list';
 import { filterTodoByRouteName } from '../../util';
 import { TodoService } from '../../services/todo.service';
-import { Inject } from '@framework-like-angular/react-adapter';
 
 interface TodoListPagePropsInterface {
   todos: TodoInterface[];
   completedAll: boolean;
 }
 
+@Injectable()
 export class todoListPage extends React.Component<TodoListPagePropsInterface, any> {
   @Inject() public todoService!: TodoService;
 

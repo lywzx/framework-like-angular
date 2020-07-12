@@ -1,6 +1,7 @@
-import { Type, Inject as CoreInject, injectorKey } from '@framework-like-angular/core';
-import { InjectorContext } from '../components/injector.component';
+/*import { Type, Inject as CoreInject, INJECTOR_KEY } from '@framework-like-angular/core';
+import { InjectorContext } from '../components/injector.component';*/
 
+/*
 export function Inject<T>(inject?: string | Type<T> | symbol) {
   const callback = CoreInject(inject);
 
@@ -11,7 +12,10 @@ export function Inject<T>(inject?: string | Type<T> | symbol) {
       // @ts-ignore
       target.constructor.contextType = InjectorContext;
 
-      Object.defineProperty(target, injectorKey, {
+      Object.defineProperty(target, INJECTOR_KEY, {
+        enumerable: false,
+        configurable: false,
+        writable: false,
         get(): any {
           return this.context._module;
         },
@@ -19,3 +23,4 @@ export function Inject<T>(inject?: string | Type<T> | symbol) {
     }
   };
 }
+*/

@@ -4,3 +4,4 @@ export * from './inject-value.interface';
 export * from './type';
 export * from './module-options.interface';
 export * from './on-module-init.interface';
+export * from './injectable-interface';

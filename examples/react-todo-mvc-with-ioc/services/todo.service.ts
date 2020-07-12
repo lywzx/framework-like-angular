@@ -8,6 +8,11 @@ let index = 0;
   defaultState: [],
 })
 export class TodoService {
+  /**
+   * 注入对象
+   */
+  // @State() protected state: TodoInterface[] = [];
+
   @Action('add-todo')
   addTodo(todo: string) {
     return {
@@ -17,7 +22,6 @@ export class TodoService {
 
   @Reducer('add-todo')
   addTodoReducer(state: TodoInterface[] = [], { todo }: { todo: string }) {
-    debugger;
     return [
       ...state,
       {

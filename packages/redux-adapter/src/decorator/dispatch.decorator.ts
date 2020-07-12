@@ -1,3 +1,1 @@
-export function Dispatch() {
-
-}
+export function Dispatch() {}

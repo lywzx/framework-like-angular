@@ -1,32 +1,27 @@
-import { IInjectorMapValue, InjectFactoryInterface, InjectParamsType, Type } from '../interfaces';
+import { INJECTABLE_KEY, INJECTOR_KEY, OPTIONAL_KEY } from '../constant';
+import { IInjectorMapValue, InjectFactoryInterface, InjectParamsType, InjectToken, Type } from '../interfaces';
 import { CircleDependenceException, NotInjectableException } from '../exceptions';
-import {
-  INJECTABLEKEY,
-  injectKey,
-  InjectReflectOptionalInterface,
-  InjectReflectValueInterface,
-  optionalKey,
-} from '../decorator';
+import { InjectReflectOptionalInterface, InjectReflectValueInterface } from '../decorator';
 import { keyBy } from 'lodash';
 import { getInjectName } from '../util';
-import {getProviders} from "../util/tools";
+import { getProviders } from '../util/tools';
 
 export class Injector {
   /**
    * 需要注入的配置信息
    */
-  protected readonly injectMap: Map<string | symbol | Type<any>, IInjectorMapValue<any>> = new Map();
+  protected readonly injectMap: Map<InjectToken, IInjectorMapValue<any>> = new Map();
 
   /**
    * 实例化之后，形成单例模式的内容
    */
-  protected readonly instanceMap: Map<string | symbol | Type<any>, any> = new Map();
+  protected readonly instanceMap: Map<InjectToken, any> = new Map();
 
   /**
    * 获取某个实例
    * @param token
    */
-  public get<T>(token: string | symbol | Type<T>): T {
+  public get<T>(token: InjectToken<T>): T {
     const injectorKey = this.injectMap.get(token);
     if (!injectorKey) {
       throw new Error(`${token.toString()} can not be inject!`);
@@ -39,7 +34,7 @@ export class Injector {
    * @param token
    * @param fn
    */
-  protected cachedFactory<T>(token: symbol | string | Type<T>, fn: () => T): T {
+  protected cachedFactory<T>(token: InjectToken<T>, fn: () => T): T {
     const instance = this.instanceMap.get(token);
     if (instance) {
       return instance;
@@ -68,11 +63,11 @@ export class Injector {
       return [];
     }
     const paramInject: Record<string | number, InjectReflectValueInterface> = keyBy(
-      Reflect.getMetadata(injectKey, target) || [],
+      Reflect.getMetadata(INJECTOR_KEY, target) || [],
       'index'
     );
     const optionInject: Record<string, InjectReflectOptionalInterface> = keyBy(
-      Reflect.getMetadata(optionalKey, target) || [],
+      Reflect.getMetadata(OPTIONAL_KEY, target) || [],
       'index'
     );
 
@@ -103,7 +98,7 @@ export class Injector {
     const injectMapping = this.injectMap.get(key);
     if (injectMapping) {
       return injectMapping;
-    } else if (Reflect.getMetadata(INJECTABLEKEY, key)) {
+    } else if (Reflect.getMetadata(INJECTABLE_KEY, key)) {
       return key as Type<any>;
     } else {
       throw new NotInjectableException(key.toString());
@@ -144,7 +139,7 @@ export class Injector {
     return this.cachedFactory(token, () => {
       const innerTarget = realTarget as Type<T> | InjectFactoryInterface<T>;
 
-      if (!isFactory && !Reflect.getMetadata(INJECTABLEKEY, innerTarget)) {
+      if (!isFactory && !Reflect.getMetadata(INJECTABLE_KEY, innerTarget)) {
         let referenceMessage = undefined;
         if (reference) {
           if ('__inject' in target) {

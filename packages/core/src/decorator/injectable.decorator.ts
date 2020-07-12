@@ -1,8 +1,11 @@
 import 'reflect-metadata';
-import { Type } from '../interfaces';
+import { INJECTABLE_KEY } from '../constant';
+import { InjectableInterface } from '../interfaces';
 
-export const INJECTABLEKEY = Symbol('INJECTABLE');
-
-export function Injectable<T>(target: Type<T>) {
-  Reflect.defineMetadata(INJECTABLEKEY, true, target);
+// eslint-disable-next-line no-unused-vars
+export function Injectable<T>(options?: InjectableInterface): ClassDecorator {
+  return function(target) {
+    // 可以被注入
+    Reflect.defineMetadata(INJECTABLE_KEY, true, target);
+  };
 }

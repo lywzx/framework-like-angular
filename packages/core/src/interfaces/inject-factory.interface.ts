@@ -1,7 +1,7 @@
 import { InjectBaseInterface } from './inject-base.interface';
-import { Type } from './type';
+import { InjectToken } from './type';
 
 export interface InjectFactoryInterface<T> extends InjectBaseInterface {
-  inject?: Array<string | symbol | Type<T>>;
+  inject?: Array<InjectToken<T>>;
   factory: (...args: any[]) => T;
 }

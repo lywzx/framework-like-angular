@@ -1,7 +1,7 @@
+import { Inject } from '@framework-like-angular/core';
 import React, { Component, KeyboardEvent } from 'react';
 import { connect } from 'react-redux';
 import { TodoService } from '../../services/todo.service';
-import { Inject } from '@framework-like-angular/react-adapter';
 
 export class AddTodoComponent extends Component<any, any> {
   @Inject() public todoService!: TodoService;

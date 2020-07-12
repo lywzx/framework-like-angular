@@ -1,25 +1,28 @@
 import 'reflect-metadata';
-import { Type } from '../interfaces';
-import { Injector } from '../libs';
-
-export const injectKey = Symbol('inject:key');
-
-export const injectorKey = Symbol('__injector__');
+import { INJECT_EXISTS_MODULE_KEY, INJECT_KEY } from '../constant';
+import { InjectToken, JsCoreObject } from '../interfaces';
+import { defineProperty, getComponentInjector } from '../util';
+import { InjectConfig } from './inject-config';
 
 export interface InjectReflectValueInterface<T = any> {
   index: number;
-  use: string | symbol | Type<T>;
+  use: InjectToken<T>;
 }
 
-export function Inject<T>(inject?: string | Type<T> | symbol) {
-  return function(target: Record<string, any>, name: string, index?: number) {
-    inject = typeof inject === 'undefined' ? Reflect.getMetadata('design:type', target, name) : inject;
+/**
+ * 注入某个对象
+ * @param inject
+ * @constructor
+ */
+export function Inject(inject?: InjectToken): ParameterDecorator & PropertyDecorator {
+  return function(target: JsCoreObject, propertyKey: string | symbol, index?: number) {
+    inject = typeof inject === 'undefined' ? Reflect.getMetadata('design:type', target, propertyKey) : inject;
     if (!inject) {
       throw new Error('');
     }
     // 参数装饰器
     if (typeof index === 'number') {
-      const old: InjectReflectValueInterface[] = Reflect.getMetadata(injectKey, target, name) || [];
+      const old: InjectReflectValueInterface[] = Reflect.getMetadata(INJECT_KEY, target, propertyKey) || [];
       const newValue = [
         ...old,
         {
@@ -27,15 +30,16 @@ export function Inject<T>(inject?: string | Type<T> | symbol) {
           index,
         },
       ];
-      Reflect.defineMetadata(injectKey, newValue, target, name);
+      Reflect.defineMetadata(INJECT_KEY, newValue, target, propertyKey);
     } else {
       const isOptional = true;
-      const old = target[name];
+      const old = (target as any)[propertyKey];
       // 属性装饰器
-      Object.defineProperty(target, name, {
+      Object.defineProperty(target, propertyKey, {
         get() {
-          const realInjector = inject as string | symbol | Type<any>;
-          const injector: Injector = this[injectorKey] as any;
+          const realInjector = inject as InjectToken;
+          const injector = getComponentInjector(this, (Inject as any)[INJECT_EXISTS_MODULE_KEY] as InjectConfig);
+          // const injector: Injector = this[INJECTOR_KEY];
           if (!injector) {
             if (isOptional) {
               return old;
@@ -44,16 +48,12 @@ export function Inject<T>(inject?: string | Type<T> | symbol) {
           }
           const instance = injector.get(realInjector);
 
-          Object.defineProperty(this, name, {
-            enumerable: true,
-            writable: false,
-            value: instance,
-          });
+          defineProperty(this, propertyKey, { enumerable: true, writable: false, value: instance });
 
           return instance;
         },
         set(instance) {
-          Object.defineProperty(this, name, {
+          defineProperty(this, propertyKey, {
             enumerable: true,
             writable: true,
             value: instance,
@@ -63,3 +63,10 @@ export function Inject<T>(inject?: string | Type<T> | symbol) {
     }
   };
 }
+
+Object.defineProperty(Inject, INJECT_EXISTS_MODULE_KEY, {
+  enumerable: false,
+  configurable: false,
+  writable: false,
+  value: new InjectConfig(),
+});

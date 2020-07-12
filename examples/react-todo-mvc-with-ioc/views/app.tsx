@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Module } from '@framework-like-angular/core';
+import { Inject, Module } from '@framework-like-angular/core';
 import { Provider, ReactReduxContext } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { history, StoreModule } from '../store';
@@ -8,7 +8,6 @@ import 'todomvc-app-css/index.css';
 import { AddTodo } from './components/add-todo';
 import { TodoListPage } from './routes/todo-list-page';
 import { Footer } from './components/footer';
-import { Inject } from '@framework-like-angular/react-adapter';
 import { Store } from 'redux';
 import { REDUX_STORE } from '@framework-like-angular/redux-adapter';
 
