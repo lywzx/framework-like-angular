@@ -24,7 +24,7 @@ export class InnerModule {
     this.injector = Injector.create(provider);
     if (options) {
       this.options = extend({}, options, {
-        imports: map(options.imports || [], it => {
+        imports: map(options.imports || [], (it) => {
           if (it instanceof InnerModule) {
             return it;
           }
@@ -40,7 +40,7 @@ export class InnerModule {
   protected init<T extends BootstrapAdapter>(adapter?: Type<T>) {
     const depsModules = (this.options && this.options.imports) || [];
 
-    depsModules.forEach(depModule => {
+    depsModules.forEach((depModule) => {
       depModule.bootstrap();
     });
 

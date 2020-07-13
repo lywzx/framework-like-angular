@@ -8,7 +8,7 @@ import { MODULE_APP } from '../constant';
  * @constructor
  */
 export function Module(options?: ModuleOptionsInterface): ClassDecorator {
-  return function(target) {
+  return function (target) {
     // eslint-disable-next-line no-unused-vars
     Object.defineProperty(target, MODULE_APP, {
       enumerable: false,

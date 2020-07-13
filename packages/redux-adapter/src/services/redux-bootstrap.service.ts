@@ -21,7 +21,7 @@ export class ReduxBootstrapService implements OnModuleInitInterface {
 
     const initReducer: ReducersMapObject<any, any> = {};
 
-    services.forEach(service => {
+    services.forEach((service) => {
       const actions: Array<Record<'type' | 'name', string>> = Reflect.getMetadata(ACTION_CONSTANT, service) || [];
       const reducers: Array<Record<'type' | 'name', string>> = Reflect.getMetadata(REDUCER_CONSTANT, service) || [];
       const reducerOptions: { stateName: string; defaultState: any } = Reflect.getMetadata(STATE_CONSTANT, service);
@@ -29,11 +29,11 @@ export class ReduxBootstrapService implements OnModuleInitInterface {
       const instance = this.module.get(service);
 
       // 构建action
-      actions.forEach(action => {
+      actions.forEach((action) => {
         const oldValue: (...args: any) => any = instance[action.name];
         if (delete instance[action.name]) {
           Object.defineProperty(instance, action.name, {
-            value: function(...args: any) {
+            value: function (...args: any) {
               const result = oldValue.call(instance, ...args);
               self.store.dispatch({
                 type: action.type,

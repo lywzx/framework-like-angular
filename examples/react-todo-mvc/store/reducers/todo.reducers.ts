@@ -41,13 +41,13 @@ export function todos(state: TodoInterface[] = [], action: AnyAction): TodoInter
       });
     }
     case DELETE_TODO: {
-      return state.filter(todo => todo.id !== action.id);
+      return state.filter((todo) => todo.id !== action.id);
     }
     case CLEAR_COMPLETED_TODO: {
-      return state.filter(todo => !todo.completed);
+      return state.filter((todo) => !todo.completed);
     }
     case TOGGLE_TODO_LIST_COMPLETE_STATE: {
-      return state.map(todo => ({
+      return state.map((todo) => ({
         ...todo,
         completed: action.completed,
       }));

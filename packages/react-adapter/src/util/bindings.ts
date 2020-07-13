@@ -12,7 +12,7 @@ const IS_BINDING = typeof Symbol === 'function' ? Symbol() : '__binding__';
  * @param {Definition[]} definitions
  */
 export function addBindings(bindingMap: Map<Token, Function>, definitions: any[]) {
-  definitions.forEach(definition => {
+  definitions.forEach((definition) => {
     let token, binding;
     if (isArray(definition)) {
       [token, binding = token] = definition;

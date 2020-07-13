@@ -48,7 +48,7 @@ export function Todo({ onToggleComplete, completed, text, onTodoDelete, onTodoEd
           className="toggle"
           type="checkbox"
           checked={completed}
-          onChange={e => {
+          onChange={(e) => {
             onToggleComplete(e.currentTarget.checked);
           }}
         />
@@ -57,7 +57,7 @@ export function Todo({ onToggleComplete, completed, text, onTodoDelete, onTodoEd
         </label>
         <button className="destroy" onClick={onTodoDelete}></button>
       </div>
-      <input ref={r => (inputRef = r)} className="edit" defaultValue={text} onKeyPress={onKeyPress} />
+      <input ref={(r) => (inputRef = r)} className="edit" defaultValue={text} onKeyPress={onKeyPress} />
     </li>
   );
 }

@@ -24,7 +24,7 @@ export class Injector {
   public get<T>(token: InjectToken<T>): T {
     const injectorKey = this.injectMap.get(token);
     if (!injectorKey) {
-      throw new Error(`${token.toString()} can not be inject!`);
+      throw new Error(`${getInjectName(token)} can not be inject!`);
     }
     return this.factory(injectorKey);
   }
@@ -50,7 +50,7 @@ export class Injector {
    */
   protected getNeedInjectParams<T>(target: Type<T> | InjectFactoryInterface<T>): InjectParamsType<T>[] {
     if ('factory' in target) {
-      return (target.inject || []).map(it => {
+      return (target.inject || []).map((it) => {
         return {
           optional: false,
           dep: it,
@@ -202,7 +202,7 @@ export class Injector {
   }
 
   public provide(...providers: IInjectorMapValue<any>[]): void {
-    getProviders(providers).forEach(provider => {
+    getProviders(providers).forEach((provider) => {
       if ('token' in provider) {
         this.injectMap.set(provider.token, provider);
       } else {

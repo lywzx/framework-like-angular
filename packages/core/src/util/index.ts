@@ -1,6 +1,7 @@
 import {
   InjectFactoryInterface,
   INJECTOR_KEY,
+  InjectToken,
   InjectUseClassInterface,
   InjectValueInterface,
   InnerModule,
@@ -17,12 +18,18 @@ export function isType(v: any): v is Type<any> {
  * @param dep
  */
 export function getInjectName(
-  dep: InjectFactoryInterface<any> | InjectValueInterface | InjectUseClassInterface<any> | Type<any>
+  dep: InjectFactoryInterface<any> | InjectValueInterface | InjectUseClassInterface<any> | Type<any> | InjectToken
 ): string {
-  if ('token' in dep) {
+  if (typeof dep === 'string') {
+    return dep;
+  }
+  if (typeof dep === 'object' && 'token' in dep) {
     return dep.token.toString();
   }
-  return dep.name.toLowerCase();
+  if (isType(dep)) {
+    return dep.name.toLowerCase();
+  }
+  return dep.toString();
 }
 
 /**
