@@ -11,12 +11,13 @@ export class ReduxModule {
     options: ModuleOptionsInterface & { store?: Store; reducers: Record<string, Reducer<any, any>> }
   ) {
     const imports = options.imports || [];
-    const module = imports.map((it) => FactoryCore.create(it));
-    const providers = flatten(module.map((m) => (m.options && m.options.provider) || []))
-      .filter((m) => isFunction(m))
-      .filter((it) => Reflect.getMetadata(REDUX_SERVICE, it));
+    const module = imports.map(it => FactoryCore.create(it));
+    const providers = flatten(module.map(m => (m.options && m.options.provider) || []))
+      .filter(m => isFunction(m))
+      .filter(it => Reflect.getMetadata(REDUX_SERVICE, it));
 
     const newModule = FactoryCore.create(ReduxModule as Type<any>);
+    debugger;
     newModule.options = {
       imports: module,
       provider: providers,
@@ -37,7 +38,7 @@ export class ReduxModule {
             return options.store;
           }
           const w = window as any;
-          return createStore((state) => state, w.__REDUX_DEVTOOLS_EXTENSION__ && w.__REDUX_DEVTOOLS_EXTENSION__());
+          return createStore(state => state, w.__REDUX_DEVTOOLS_EXTENSION__ && w.__REDUX_DEVTOOLS_EXTENSION__());
         },
       },
       {
@@ -45,7 +46,6 @@ export class ReduxModule {
         useValue: options.reducers,
       }
     );
-
     return newModule;
   }
 }

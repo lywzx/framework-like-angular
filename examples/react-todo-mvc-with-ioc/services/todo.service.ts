@@ -41,7 +41,7 @@ export class TodoService {
 
   @Reducer('toggle-todo')
   toggleTodoReducer(state: TodoInterface[], { id }: { id: number }) {
-    return state.map((todo) => {
+    return state.map(todo => {
       if (todo.id === id) {
         return Object.assign({}, todo, {
           completed: !todo.completed,
@@ -60,7 +60,7 @@ export class TodoService {
 
   @Reducer('delete-item')
   deleteItemReducer(state: TodoInterface[], { id }: { id: number }) {
-    return state.filter((todo) => todo.id !== id);
+    return state.filter(todo => todo.id !== id);
   }
 
   @Action('change-item')
@@ -70,7 +70,7 @@ export class TodoService {
 
   @Reducer('change-item')
   editItemReducer(state: TodoInterface[], edit: { id: number; text: string }) {
-    return state.map((todo) => {
+    return state.map(todo => {
       if (todo.id === edit.id) {
         return Object.assign({}, todo, {
           text: edit.text,
@@ -89,7 +89,7 @@ export class TodoService {
 
   @Reducer('toggle-list')
   listToggleCompleteReducer(state: TodoInterface[], action: { completed: boolean }) {
-    return state.map((todo) => ({
+    return state.map(todo => ({
       ...todo,
       completed: action.completed,
     }));
@@ -102,6 +102,6 @@ export class TodoService {
 
   @Reducer('clear-complete')
   clearCompleteReducer(state: TodoInterface[]) {
-    return state.filter((todo) => !todo.completed);
+    return state.filter(todo => !todo.completed);
   }
 }

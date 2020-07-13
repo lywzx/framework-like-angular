@@ -1,4 +1,4 @@
-import { INJECTABLE_KEY, INJECTOR_KEY, OPTIONAL_KEY } from '../constant';
+import { INJECT_KEY, INJECTABLE_KEY, OPTIONAL_KEY } from '../constant';
 import { IInjectorMapValue, InjectFactoryInterface, InjectParamsType, InjectToken, Type } from '../interfaces';
 import { CircleDependenceException, NotInjectableException } from '../exceptions';
 import { InjectReflectOptionalInterface, InjectReflectValueInterface } from '../decorator';
@@ -50,7 +50,7 @@ export class Injector {
    */
   protected getNeedInjectParams<T>(target: Type<T> | InjectFactoryInterface<T>): InjectParamsType<T>[] {
     if ('factory' in target) {
-      return (target.inject || []).map((it) => {
+      return (target.inject || []).map(it => {
         return {
           optional: false,
           dep: it,
@@ -63,7 +63,7 @@ export class Injector {
       return [];
     }
     const paramInject: Record<string | number, InjectReflectValueInterface> = keyBy(
-      Reflect.getMetadata(INJECTOR_KEY, target) || [],
+      Reflect.getMetadata(INJECT_KEY, target) || [],
       'index'
     );
     const optionInject: Record<string, InjectReflectOptionalInterface> = keyBy(
@@ -202,7 +202,7 @@ export class Injector {
   }
 
   public provide(...providers: IInjectorMapValue<any>[]): void {
-    getProviders(providers).forEach((provider) => {
+    getProviders(providers).forEach(provider => {
       if ('token' in provider) {
         this.injectMap.set(provider.token, provider);
       } else {

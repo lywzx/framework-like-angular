@@ -11,7 +11,7 @@ export interface InjectReflectOptionalInterface {
  * @param optional
  */
 export function Optional<T>(optional = true): ParameterDecorator | PropertyDecorator {
-  return function (target: JsCoreObject, name: string | symbol, index?: number) {
+  return function(target: JsCoreObject, name: string | symbol, index?: number) {
     const old: InjectReflectOptionalInterface[] = Reflect.getMetadata(OPTIONAL_KEY, target, name) || [];
     const newValue = [
       ...old,

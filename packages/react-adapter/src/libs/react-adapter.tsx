@@ -1,4 +1,5 @@
-import { BootstrapAdapter } from '@framework-like-angular/core';
+import { BootstrapAdapter, Inject, INJECT_EXISTS_MODULE_KEY } from '@framework-like-angular/core';
+import { InjectConfig } from '@framework-like-angular/core';
 import React, { createElement } from 'react';
 import { InjectorComponent, InjectorContext } from '../components/injector.component';
 import { isFunction, isObject } from 'lodash';
@@ -6,6 +7,7 @@ import { addBindings } from '../util/bindings';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import ReactDOM from 'react-dom';
 
+const injectConfig: InjectConfig = (Inject as any)[INJECT_EXISTS_MODULE_KEY] as any;
 export class ReactAdapter extends BootstrapAdapter {
   bootstrap(): any {
     /** @type {Map<Token, Function>} */
@@ -14,6 +16,8 @@ export class ReactAdapter extends BootstrapAdapter {
     const module = this.module;
     const Wrapped = this.target;
     const options = this.options;
+
+    injectConfig.set(module);
 
     // ts-ignore
     class Provider<P, S> extends InjectorComponent<P, S> {

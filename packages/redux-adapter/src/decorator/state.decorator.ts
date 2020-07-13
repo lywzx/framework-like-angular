@@ -19,7 +19,7 @@ export function State(
   options?: { stateName: string; defaultState: any } | string
 ): ClassDecorator & PropertyDecorator & ParameterDecorator {
   const InjectableCallback = Injectable();
-  return function (target: JsCoreObject, name?: string | symbol, index?: number) {
+  return function(target: JsCoreObject, name?: string | symbol, index?: number) {
     // 参数装饰器
     if (typeof target === 'object') {
       if (!(typeof options === 'undefined' || typeof options === 'string')) {

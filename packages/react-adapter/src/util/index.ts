@@ -21,7 +21,7 @@ export function getInjector(target: any): Injector | null {
 const registrationQueue: any[] = [];
 export function getInstance(injector: any, token: any) {
   if (registrationQueue.length > 0) {
-    registrationQueue.forEach((registration) => {
+    registrationQueue.forEach(registration => {
       registration();
     });
     registrationQueue.length = 0;

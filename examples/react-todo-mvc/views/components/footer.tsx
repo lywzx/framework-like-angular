@@ -38,7 +38,7 @@ export const Footer = connect(
       total: filterTodoByRouteName(state.todos, state.router.location.pathname).length,
     };
   },
-  (dispatch) => {
+  dispatch => {
     return {
       clearCompleted: () => {
         dispatch(clearCompletedTodo());
