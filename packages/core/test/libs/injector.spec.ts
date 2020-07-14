@@ -8,5 +8,16 @@ describe('injector test', function () {
     expect(injector).to.be.instanceOf(Injector);
   });
 
-  it('#get() Type', function () {});
+  it('#provides', function () {
+    const injector = new Injector();
+
+    injector.provide(
+      ...[
+        {
+          provide: 'A',
+          useValue: 'a',
+        },
+      ]
+    );
+  });
 });

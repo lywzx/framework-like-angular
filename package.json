@@ -9,7 +9,7 @@
     "format": "prettier --write \"packages/**/*.ts\" \"packages/**/*.tsx\" \"examples/**/*.ts\" \"examples/**/*.tsx\"",
     "lint": "eslint \"{packages,examples}/**/*.{ts,tsx}\" --fix",
     "lint-staged": "lint-staged",
-    "test": "mocha --require ts-node/register --require tsconfig-paths/register packages/**/test/*.test.ts packages/**/test/**/*.test.ts --colors"
+    "test": "mocha --require ts-node/register --require tsconfig-paths/register packages/**/*.spec.ts --colors"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.10.4",
@@ -30,7 +30,9 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.3",
     "express": "^4.17.1",
+    "husky": "^4.2.5",
     "lerna": "^3.22.0",
+    "lint-staged": "^10.2.11",
     "mocha": "^8.0.1",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
@@ -56,5 +58,10 @@
     "connected-react-router": "^6.8.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged"
+    }
   }
 }

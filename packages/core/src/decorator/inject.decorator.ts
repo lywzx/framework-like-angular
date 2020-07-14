@@ -14,7 +14,7 @@ export interface InjectReflectValueInterface<T = any> {
  * @constructor
  */
 export function Inject(inject?: InjectToken): ParameterDecorator & PropertyDecorator {
-  return function(target: JsCoreObject, propertyKey: string | symbol, index?: number) {
+  return function (target: JsCoreObject, propertyKey: string | symbol, index?: number) {
     inject = typeof inject === 'undefined' ? Reflect.getMetadata('design:type', target, propertyKey) : inject;
     if (!inject) {
       throw new Error('');

@@ -49,7 +49,7 @@ export const TodoListPage = connect<
       completedAll: state.todos.length === completedTodos.length && completedTodos.length != 0,
     };
   },
-  dispatch => {
+  (dispatch) => {
     return {
       onDeleteItem: (id: number) => {
         dispatch(deleteTodo(id));

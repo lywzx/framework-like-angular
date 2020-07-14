@@ -10,9 +10,9 @@ export class InnerModule implements ModuleInterface {
   public options?: ModuleOptions;
 
   constructor(protected target: Type<any>, options?: ModuleOptions) {
-    const provider = getProviders(options && options.provider);
+    const provider = getProviders(options && options.providers);
     provider.push({
-      token: MODULE_REF,
+      provide: MODULE_REF,
       useValue: this,
     });
     this.injector = Injector.create(provider);

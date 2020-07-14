@@ -13,8 +13,8 @@ export function getProviders(
 
   for (let i = 0, j = providers.length; i < j; i++) {
     const currentProvider = providers[i];
-    if ('token' in currentProvider) {
-      if (currentProvider.token === MODULE_INIT) {
+    if ('provide' in currentProvider) {
+      if (currentProvider.provide === MODULE_INIT) {
         if ('useClass' in currentProvider) {
           moduleInitProvider.push(currentProvider.useClass);
           commonProvider.push(currentProvider.useClass);
@@ -25,7 +25,7 @@ export function getProviders(
     commonProvider.push(currentProvider);
   }
   commonProvider.push({
-    token: MODULE_INIT,
+    provide: MODULE_INIT,
     useValue: moduleInitProvider,
   });
   return commonProvider;

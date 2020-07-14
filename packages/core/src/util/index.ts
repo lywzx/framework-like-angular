@@ -23,8 +23,8 @@ export function getInjectName(
   if (typeof dep === 'string') {
     return dep;
   }
-  if (typeof dep === 'object' && 'token' in dep) {
-    return dep.token.toString();
+  if (typeof dep === 'object' && 'provide' in dep) {
+    return dep.provide.toString();
   }
   if (isType(dep)) {
     return dep.name.toLowerCase();

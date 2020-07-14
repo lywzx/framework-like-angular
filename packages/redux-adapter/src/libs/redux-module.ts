@@ -7,42 +7,40 @@ import { REDUX_SERVICE } from '../decorator/redux-service.decorator';
 
 @Module()
 export class ReduxModule {
-  public static forRoot(
-    options: ModuleOptions & { store?: Store; reducers: Record<string, Reducer<any, any>> }
-  ) {
+  public static forRoot(options: ModuleOptions & { store?: Store; reducers: Record<string, Reducer<any, any>> }) {
     const imports = options.imports || [];
-    const module = imports.map(it => FactoryCore.create(it));
-    const providers = flatten(module.map(m => (m.options && m.options.provider) || []))
-      .filter(m => isFunction(m))
-      .filter(it => Reflect.getMetadata(REDUX_SERVICE, it));
+    const module = imports.map((it) => FactoryCore.create(it));
+    const providers = flatten(module.map((m) => (m.options && m.options.providers) || []))
+      .filter((m) => isFunction(m))
+      .filter((it) => Reflect.getMetadata(REDUX_SERVICE, it));
 
     const newModule = FactoryCore.create(ReduxModule as Type<any>);
     debugger;
     newModule.options = {
       imports: module,
-      provider: providers,
+      providers: providers,
     };
     newModule.injector.provide(
       {
-        token: REDUX_SERVICE_TOKEN,
+        provide: REDUX_SERVICE_TOKEN,
         useValue: providers,
       },
       {
-        token: MODULE_INIT,
+        provide: MODULE_INIT,
         useClass: ReduxBootstrapService,
       },
       {
-        token: REDUX_STORE,
+        provide: REDUX_STORE,
         factory() {
           if (options && options.store) {
             return options.store;
           }
           const w = window as any;
-          return createStore(state => state, w.__REDUX_DEVTOOLS_EXTENSION__ && w.__REDUX_DEVTOOLS_EXTENSION__());
+          return createStore((state) => state, w.__REDUX_DEVTOOLS_EXTENSION__ && w.__REDUX_DEVTOOLS_EXTENSION__());
         },
       },
       {
-        token: DEFAULT_REDUCER,
+        provide: DEFAULT_REDUCER,
         useValue: options.reducers,
       }
     );

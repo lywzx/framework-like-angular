@@ -50,7 +50,7 @@ export class Injector {
    */
   protected getNeedInjectParams<T>(target: Type<T> | InjectFactoryInterface<T>): InjectParamsType<T>[] {
     if ('factory' in target) {
-      return (target.inject || []).map(it => {
+      return (target.inject || []).map((it) => {
         return {
           optional: false,
           dep: it,
@@ -116,13 +116,13 @@ export class Injector {
     reference?: Type<T> | InjectFactoryInterface<T>,
     deps: any[] = []
   ): T {
-    const token = 'token' in target ? target.token : target;
+    const token = 'provide' in target ? target.provide : target;
     let realTarget: Type<T> | InjectFactoryInterface<T> | undefined;
     let isFactory = false;
 
-    if ('token' in target) {
+    if ('provide' in target) {
       if ('useValue' in target) {
-        return this.cachedFactory(target.token, () => target.useValue);
+        return this.cachedFactory(target.provide, () => target.useValue);
       }
       if ('useClass' in target) {
         realTarget = target.useClass;
@@ -153,16 +153,6 @@ export class Injector {
 
       // 获取target类的构造函数参数providers
       const providers = this.getNeedInjectParams(innerTarget) || [];
-
-      /*if (!providers.length) {
-        let targetResult;
-        if ('factory' in innerTarget) {
-          targetResult = innerTarget.factory();
-        } else {
-          targetResult = Reflect.construct(innerTarget, []);
-        }
-        return targetResult;
-      }*/
 
       // 将参数依次实例化
       const args = providers.map((provider, index) => {
@@ -202,9 +192,9 @@ export class Injector {
   }
 
   public provide(...providers: IInjectorMapValue<any>[]): void {
-    getProviders(providers).forEach(provider => {
-      if ('token' in provider) {
-        this.injectMap.set(provider.token, provider);
+    getProviders(providers).forEach((provider) => {
+      if ('provide' in provider) {
+        this.injectMap.set(provider.provide, provider);
       } else {
         this.injectMap.set(provider, provider as IInjectorMapValue<any>);
       }

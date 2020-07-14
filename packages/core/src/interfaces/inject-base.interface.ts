@@ -1,5 +1,5 @@
 import { Type } from './type';
 
 export interface InjectBaseInterface {
-  token: string | symbol | Type<any>;
+  provide: string | symbol | Type<any>;
 }
