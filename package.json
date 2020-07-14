@@ -8,7 +8,8 @@
     "start": "node examples/server.js",
     "format": "prettier --write \"packages/**/*.ts\" \"packages/**/*.tsx\" \"examples/**/*.ts\" \"examples/**/*.tsx\"",
     "lint": "eslint \"{packages,examples}/**/*.{ts,tsx}\" --fix",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "test": "mocha --require ts-node/register --require tsconfig-paths/register packages/**/test/*.test.ts packages/**/test/**/*.test.ts --colors"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.10.4",
@@ -41,6 +42,8 @@
     "todomvc-app-css": "^2.3.0",
     "todomvc-common": "^1.0.5",
     "ts-loader": "^7.0.5",
+    "ts-node": "^8.10.2",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.9.5",
     "vue-loader": "^15.9.3",
     "vue-style-loader": "^4.1.2",

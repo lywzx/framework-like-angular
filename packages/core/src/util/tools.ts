@@ -1,10 +1,5 @@
-import {
-  InjectFactoryInterface,
-  InjectUseClassInterface,
-  InjectValueInterface,
-  MODULE_INIT,
-  Type,
-} from '@framework-like-angular/core';
+import { InjectValueInterface, InjectUseClassInterface, Type, InjectFactoryInterface } from '../interfaces';
+import { MODULE_INIT } from '../constant';
 
 /**
  *

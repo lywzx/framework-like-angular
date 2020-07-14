@@ -1,13 +1,13 @@
+import { InjectConfig } from '../decorator/inject-config';
 import {
   InjectFactoryInterface,
-  INJECTOR_KEY,
   InjectToken,
   InjectUseClassInterface,
   InjectValueInterface,
-  InnerModule,
+  ModuleInterface,
   Type,
-} from '@framework-like-angular/core';
-import { InjectConfig } from '../decorator/inject-config';
+} from '../interfaces';
+import { INJECTOR_KEY } from '../constant';
 
 export function isType(v: any): v is Type<any> {
   return typeof v === 'function';
@@ -38,7 +38,7 @@ export function getInjectName(
  * @param injectConfig
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function getComponentInjector(obj: any, injectConfig: InjectConfig): InnerModule | null {
+export function getComponentInjector(obj: any, injectConfig: InjectConfig): ModuleInterface | null {
   if (obj[INJECTOR_KEY]) {
     return obj[INJECTOR_KEY];
   }

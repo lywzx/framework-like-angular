@@ -1,4 +1,4 @@
-import { FactoryCore, Module, MODULE_INIT, ModuleOptionsInterface, Type } from '@framework-like-angular/core';
+import { FactoryCore, Module, MODULE_INIT, ModuleOptions, Type } from '@framework-like-angular/core';
 import { flatten, isFunction } from 'lodash';
 import { DEFAULT_REDUCER, REDUX_SERVICE_TOKEN, REDUX_STORE } from '../constant';
 import { ReduxBootstrapService } from '../services/redux-bootstrap.service';
@@ -8,7 +8,7 @@ import { REDUX_SERVICE } from '../decorator/redux-service.decorator';
 @Module()
 export class ReduxModule {
   public static forRoot(
-    options: ModuleOptionsInterface & { store?: Store; reducers: Record<string, Reducer<any, any>> }
+    options: ModuleOptions & { store?: Store; reducers: Record<string, Reducer<any, any>> }
   ) {
     const imports = options.imports || [];
     const module = imports.map(it => FactoryCore.create(it));

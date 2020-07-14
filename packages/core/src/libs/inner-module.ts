@@ -1,21 +1,15 @@
-import {
-  BootstrapAdapter,
-  FactoryCore,
-  Injector,
-  MODULE_INIT,
-  MODULE_REF,
-  ModuleOptionsInterface,
-  Type,
-} from '@framework-like-angular/core';
 import { getProviders } from '../util/tools';
 import { extend, map } from 'lodash';
+import { ModuleInterface, ModuleOptions, Type } from '../interfaces';
+import { Injector, FactoryCore, BootstrapAdapter } from '../libs';
+import { MODULE_REF, MODULE_INIT } from '../constant';
 
-export class InnerModule {
+export class InnerModule implements ModuleInterface {
   public injector: Injector;
 
-  public options?: ModuleOptionsInterface;
+  public options?: ModuleOptions;
 
-  constructor(protected target: Type<any>, options?: ModuleOptionsInterface) {
+  constructor(protected target: Type<any>, options?: ModuleOptions) {
     const provider = getProviders(options && options.provider);
     provider.push({
       token: MODULE_REF,
@@ -24,7 +18,7 @@ export class InnerModule {
     this.injector = Injector.create(provider);
     if (options) {
       this.options = extend({}, options, {
-        imports: map(options.imports || [], it => {
+        imports: map(options.imports || [], (it) => {
           if (it instanceof InnerModule) {
             return it;
           }
@@ -40,7 +34,7 @@ export class InnerModule {
   protected init<T extends BootstrapAdapter>(adapter?: Type<T>) {
     const depsModules = (this.options && this.options.imports) || [];
 
-    depsModules.forEach(depModule => {
+    depsModules.forEach((depModule) => {
       depModule.bootstrap();
     });
 

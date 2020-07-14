@@ -3,7 +3,7 @@ import { InjectUseClassInterface } from './inject-use-class.interface';
 import { InjectValueInterface } from './inject-value.interface';
 import { InjectFactoryInterface } from './inject-factory.interface';
 
-export interface ModuleOptionsInterface {
+export interface ModuleOptions {
   bootstrap?: any;
   // 需要导入的模块
   imports?: any[];

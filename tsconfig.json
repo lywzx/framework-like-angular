@@ -17,19 +17,15 @@
         "packages/core/src"
       ],
       "@framework-like-angular/react-adapter": [
-        "packages/react-adapter/src"
+        "packages/react-adapter"
       ],
       "@framework-like-angular/redux-adapter": [
-        "packages/redux-adapter/src"
+        "packages/redux-adapter"
       ],
       "@framework-like-angular/vue-adapter": [
-        "packages/vue-adapter/src"
+        "packages/vue-adapter"
       ]
     }
   },
-  "include": ["packages", "examples"],
-  "typedocOptions": {
-    "mode": "modules",
-    "out": "apidocs"
-  }
+  "include": ["packages", "examples"]
 }
