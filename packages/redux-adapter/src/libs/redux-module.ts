@@ -15,7 +15,6 @@ export class ReduxModule {
       .filter((it) => Reflect.getMetadata(REDUX_SERVICE, it));
 
     const newModule = FactoryCore.create(ReduxModule as Type<any>);
-    debugger;
     newModule.options = {
       imports: module,
       providers: providers,

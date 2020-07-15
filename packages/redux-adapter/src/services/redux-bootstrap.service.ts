@@ -2,7 +2,7 @@ import { Inject, Injectable, MODULE_REF, OnModuleInitInterface, Type } from '@fr
 import { DEFAULT_REDUCER, REDUX_SERVICE_TOKEN, REDUX_STORE } from '../constant';
 import { AnyAction, combineReducers, Reducer, ReducersMapObject, Store } from 'redux';
 import { ModuleInterface } from '@framework-like-angular/core';
-import { ACTION_CONSTANT, REDUCER_CONSTANT, STATE_CONSTANT } from '../decorator';
+import { ACTION_CONSTANT, IStateInjectInterface, REDUCER_CONSTANT, STATE_CONSTANT, STATE_INJECT } from '../decorator';
 import { keyBy } from 'lodash';
 
 @Injectable()
@@ -17,6 +17,7 @@ export class ReduxBootstrapService implements OnModuleInitInterface {
   onModuleInit(): void {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
+    const store = this.store;
     const services = this.services;
 
     const initReducer: ReducersMapObject<any, any> = {};
@@ -27,6 +28,38 @@ export class ReduxBootstrapService implements OnModuleInitInterface {
       const reducerOptions: { stateName: string; defaultState: any } = Reflect.getMetadata(STATE_CONSTANT, service);
 
       const instance = this.module.get(service);
+
+      // 处理state的注入问题
+      const injectState: IStateInjectInterface[] = Reflect.getMetadata(STATE_INJECT, service) || [];
+      if (injectState.length) {
+        injectState.forEach(function (config) {
+          const oldValue = instance[config.name];
+          if (delete instance[config.name]) {
+            Reflect.defineProperty(service.prototype, config.name, {
+              get() {
+                let reference = config.reference;
+                if (typeof reference === 'undefined') {
+                  reference = service;
+                }
+                const referenceName =
+                  typeof reference === 'function'
+                    ? (Reflect.getMetadata(STATE_CONSTANT, service) || {}).stateName
+                    : reference;
+
+                if (!referenceName) {
+                  throw new Error('can not find state name');
+                }
+
+                const fn = () => store.getState()[referenceName] || oldValue;
+                Reflect.defineProperty(this, config.name, {
+                  get: fn,
+                });
+                return fn();
+              },
+            });
+          }
+        });
+      }
 
       // 构建action
       actions.forEach((action) => {
@@ -55,7 +88,7 @@ export class ReduxBootstrapService implements OnModuleInitInterface {
         };
       }
     });
-    this.store.replaceReducer(
+    store.replaceReducer(
       combineReducers({
         ...this.reducers,
         ...initReducer,

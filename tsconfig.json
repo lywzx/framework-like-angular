@@ -17,13 +17,13 @@
         "packages/core/src"
       ],
       "@framework-like-angular/react-adapter": [
-        "packages/react-adapter"
+        "packages/react-adapter/src"
       ],
       "@framework-like-angular/redux-adapter": [
-        "packages/redux-adapter"
+        "packages/redux-adapter/src"
       ],
       "@framework-like-angular/vue-adapter": [
-        "packages/vue-adapter"
+        "packages/vue-adapter/src"
       ]
     }
   },

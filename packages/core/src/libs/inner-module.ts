@@ -49,7 +49,6 @@ export class InnerModule implements ModuleInterface {
     }
 
     for (let i = 0, j = appInitServices.length; i < j; i++) {
-      debugger;
       const instance = this.get<{ onModuleInit?: () => void }>(appInitServices[i]);
 
       if (instance && typeof instance.onModuleInit === 'function') {

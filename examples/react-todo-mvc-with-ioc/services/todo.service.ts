@@ -11,7 +11,7 @@ export class TodoService {
   /**
    * 注入对象
    */
-  // @State() protected state: TodoInterface[] = [];
+  @State() protected state: TodoInterface[] = [];
 
   @Action('add-todo')
   addTodo(todo: string) {

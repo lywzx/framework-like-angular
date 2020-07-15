@@ -1,5 +1,5 @@
 import { REDUX_SERVICE } from './redux-service.decorator';
-import { Injectable, JsCoreObject } from '@framework-like-angular/core';
+import { Injectable, JsCoreObject, Type } from '@framework-like-angular/core';
 
 // 当前状态管理存储常量
 export const STATE_CONSTANT = Symbol('__state_constant__');
@@ -10,7 +10,7 @@ export interface IStateInjectInterface {
   // 注入的变量名称
   name: string;
   // 引用的内容
-  reference?: string;
+  reference?: string | Type<any>;
 }
 
 export function State(options?: string): PropertyDecorator & ParameterDecorator;
