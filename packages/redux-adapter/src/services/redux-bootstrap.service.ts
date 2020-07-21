@@ -1,4 +1,4 @@
-import { Inject, Injectable, MODULE_REF, OnModuleInitInterface, Type } from '@framework-like-angular/core';
+import { Inject, Injectable, MODULE_REF, OnModuleInit, Type } from '@framework-like-angular/core';
 import { DEFAULT_REDUCER, REDUX_SERVICE_TOKEN, REDUX_STORE } from '../constant';
 import { AnyAction, combineReducers, Reducer, ReducersMapObject, Store } from 'redux';
 import { ModuleInterface } from '@framework-like-angular/core';
@@ -6,7 +6,7 @@ import { ACTION_CONSTANT, IStateInjectInterface, REDUCER_CONSTANT, STATE_CONSTAN
 import { keyBy } from 'lodash';
 
 @Injectable()
-export class ReduxBootstrapService implements OnModuleInitInterface {
+export class ReduxBootstrapService implements OnModuleInit {
   constructor(
     @Inject(REDUX_SERVICE_TOKEN) protected services: Type<any>[],
     @Inject(REDUX_STORE) protected store: Store,

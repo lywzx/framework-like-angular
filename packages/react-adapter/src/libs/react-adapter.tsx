@@ -51,7 +51,7 @@ export class ReactAdapter extends BootstrapAdapter {
     // static fields from component should be visible on the generated Consumer
     const App = hoistNonReactStatics(Provider, Wrapped);
     if (options && options.bootstrap) {
-      ReactDOM.render(<App />, document.getElementById('root'));
+      ReactDOM.render(<App />, document.querySelector(options.bootstrap));
     }
   }
 }
