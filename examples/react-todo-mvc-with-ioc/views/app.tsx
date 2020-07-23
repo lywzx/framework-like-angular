@@ -9,7 +9,7 @@ import { AddTodo } from './components/add-todo';
 import { TodoListPage } from './routes/todo-list-page';
 import { Footer } from './components/footer';
 import { Store } from 'redux';
-import { REDUX_STORE } from '@framework-like-angular/redux-adapter';
+import { REDUX_STORE } from '@framework-like-angular/redux';
 
 @Module({
   bootstrap: '#root',

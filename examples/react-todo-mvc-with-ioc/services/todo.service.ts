@@ -1,5 +1,5 @@
-import { Action, State } from '@framework-like-angular/redux-adapter';
-import { Reducer } from '@framework-like-angular/redux-adapter';
+import { Action, State } from '@framework-like-angular/redux';
+import { Reducer } from '@framework-like-angular/redux';
 import { TodoInterface } from '../interfaces/todo.interface';
 
 let index = 0;

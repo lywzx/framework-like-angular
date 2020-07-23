@@ -1,7 +1,7 @@
 import { combineReducers, createStore } from 'redux';
 import { TodoInterface } from '../interfaces/todo.interface';
 import { createHashHistory } from 'history';
-import { ReduxModule } from '@framework-like-angular/redux-adapter';
+import { ReduxModule } from '@framework-like-angular/redux';
 import { ReduxStoreModule } from './redux-store-module';
 import { connectRouter } from 'connected-react-router';
 

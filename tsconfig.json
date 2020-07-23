@@ -19,8 +19,8 @@
       "@framework-like-angular/react-adapter": [
         "packages/react-adapter/src"
       ],
-      "@framework-like-angular/redux-adapter": [
-        "packages/redux-adapter/src"
+      "@framework-like-angular/redux": [
+        "packages/redux/src"
       ],
       "@framework-like-angular/vue-adapter": [
         "packages/vue-adapter/src"
