@@ -191,6 +191,10 @@ export class Injector {
     });
   }
 
+  /**
+   *
+   * @param providers
+   */
   public provide(...providers: IInjectorMapValue<any>[]): void {
     getProviders(providers).forEach((provider) => {
       if ('provide' in provider) {

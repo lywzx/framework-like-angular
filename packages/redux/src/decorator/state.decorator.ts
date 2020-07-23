@@ -13,10 +13,10 @@ export interface IStateInjectInterface {
   reference?: string | Type<any>;
 }
 
-export function State(options?: string): PropertyDecorator & ParameterDecorator;
+export function State(options?: string | Type<any>): PropertyDecorator & ParameterDecorator;
 export function State(options: { stateName: string; defaultState: any }): ClassDecorator;
 export function State(
-  options?: { stateName: string; defaultState: any } | string
+  options?: { stateName: string; defaultState: any } | string | Type<any>
 ): ClassDecorator & PropertyDecorator & ParameterDecorator {
   const InjectableCallback = Injectable();
   return function (target: JsCoreObject, name?: string | symbol, index?: number) {
