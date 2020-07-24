@@ -1,6 +1,6 @@
-import { TestModule } from './util';
 import { Injectable, ModuleInterface } from '../src';
 import { expect } from 'chai';
+import { TestingModule } from '../../testing/src';
 
 @Injectable()
 class A {}
@@ -21,7 +21,7 @@ describe('module test', function () {
   let testModule: ModuleInterface;
 
   before(() => {
-    testModule = TestModule.createTestModule({
+    testModule = TestingModule.createTestingModule({
       providers: [A, C],
     });
   });
