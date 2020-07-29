@@ -25,5 +25,8 @@
   },
   "bugs": {
     "url": "https://github.com/lywzx/framework-like-angular/issues"
+  },
+  "dependencies": {
+    "@framework-like-angular/core": "^0.0.0"
   }
 }

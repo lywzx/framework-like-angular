@@ -4,8 +4,8 @@
   "description": "> TODO: description",
   "author": "lywzx <liuyang@lyblog.net>",
   "homepage": "https://github.com/lywzx/framework-like-angular#readme",
-  "license": "ISC",
-  "main": "src/vue-adapter.js",
+  "license": "MIT",
+  "main": "lib/index.js",
   "directories": {
     "lib": "src",
     "test": "test"

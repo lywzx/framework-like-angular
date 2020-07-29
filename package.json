@@ -9,7 +9,8 @@
     "format": "prettier --write \"packages/**/*.ts\" \"packages/**/*.tsx\" \"examples/**/*.ts\" \"examples/**/*.tsx\"",
     "lint": "eslint \"{packages,examples}/**/*.{ts,tsx}\" --fix",
     "lint-staged": "lint-staged",
-    "test": "mocha --require ts-node/register --require tsconfig-paths/register packages/**/*.spec.ts --colors"
+    "test": "mocha --require ts-node/register --require tsconfig-paths/register packages/**/*.spec.ts --colors",
+    "build": "tsc --build packages/core/tsconfig.json && tsc --build packages/react-adapter/tsconfig.json && tsc --build packages/redux/tsconfig.json"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.10.4",
