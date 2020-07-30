@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "ES2015",
     "declaration": true,
     "outDir": "./lib",
     "strict": true,
@@ -10,22 +10,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "lib": ["es6", "dom"],
-    "jsx": "react",
-    "baseUrl": ".",
-    "paths": {
-      "@framework-like-angular/core": [
-        "packages/core/src"
-      ],
-      "@framework-like-angular/react-adapter": [
-        "packages/react-adapter/src"
-      ],
-      "@framework-like-angular/redux": [
-        "packages/redux/src"
-      ],
-      "@framework-like-angular/vue-adapter": [
-        "packages/vue-adapter/src"
-      ]
-    }
+    "jsx": "react"
   },
   "include": ["packages", "examples"]
 }

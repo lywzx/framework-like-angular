@@ -5,15 +5,22 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "node examples/server.js",
+    "dev": "node examples/server.js",
+    "start": "rollup -w -c build/rollup.config.js",
+    "build": "node build/build-pkg.js",
     "format": "prettier --write \"packages/**/*.ts\" \"packages/**/*.tsx\" \"examples/**/*.ts\" \"examples/**/*.tsx\"",
     "lint": "eslint \"{packages,examples}/**/*.{ts,tsx}\" --fix",
     "lint-staged": "lint-staged",
-    "test": "mocha --require ts-node/register --require tsconfig-paths/register packages/**/*.spec.ts --colors",
-    "build": "tsc --build packages/core/tsconfig.json && tsc --build packages/react-adapter/tsconfig.json && tsc --build packages/redux/tsconfig.json"
+    "test": "mocha --require ts-node/register --require tsconfig-paths/register packages/**/*.spec.ts --colors"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.10.4",
+    "@rollup/plugin-babel": "^5.1.0",
+    "@rollup/plugin-buble": "^0.21.3",
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
+    "@rollup/plugin-replace": "^2.3.3",
     "@types/chai": "^4.2.11",
     "@types/classnames": "^2.2.10",
     "@types/mocha": "^7.0.2",
@@ -25,6 +32,7 @@
     "@typescript-eslint/parser": "^3.5.0",
     "chai": "^4.2.0",
     "classnames": "^2.2.6",
+    "cross-env": "^7.0.2",
     "css-loader": "^3.6.0",
     "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
@@ -42,6 +50,7 @@
     "react-redux": "^7.2.0",
     "react-router": "^5.2.0",
     "reflect-metadata": "^0.1.13",
+    "rollup": "^2.23.0",
     "todomvc-app-css": "^2.3.0",
     "todomvc-common": "^1.0.5",
     "ts-loader": "^7.0.5",
@@ -52,7 +61,9 @@
     "vue-style-loader": "^4.1.2",
     "webpack": "^4.43.0",
     "webpack-dev-middleware": "^3.7.2",
-    "webpack-hot-middleware": "^2.25.0"
+    "webpack-hot-middleware": "^2.25.0",
+    "rollup-plugin-terser": "^6.1.0",
+    "rollup-plugin-typescript2": "^0.27.1"
   },
   "dependencies": {
     "@types/react-router-dom": "^5.1.5",

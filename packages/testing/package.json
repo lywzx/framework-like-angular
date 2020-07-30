@@ -5,7 +5,11 @@
   "author": "lywzx <liuyang@lyblog.net>",
   "homepage": "https://github.com/lywzx/framework-like-angular#readme",
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "lib/index.common.js",
+  "module": "lib/index.esm.js",
+  "unpkg": "lib/index.js",
+  "jsdelivr": "lib/index.js",
+  "types": "lib/index.d.ts",
   "directories": {
     "lib": "lib",
     "test": "test"
