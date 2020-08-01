@@ -1,7 +1,6 @@
-import { isArray } from 'lodash';
-import { Token } from './helper';
-import { INJECTOR } from './index';
-
+import isArray from 'lodash/isArray';
+import { INJECTOR } from '../constant';
+import { Token } from '../interfaces';
 /* istanbul ignore next */
 const IS_BINDING = typeof Symbol === 'function' ? Symbol() : '__binding__';
 
@@ -11,7 +10,7 @@ const IS_BINDING = typeof Symbol === 'function' ? Symbol() : '__binding__';
  * @param {Map<Token, Function>} bindingMap
  * @param {Definition[]} definitions
  */
-export function addBindings(bindingMap: Map<Token, Function>, definitions: any[]) {
+export function addBindings(bindingMap: Map<Token, (...args: any[]) => any>, definitions: any[]) {
   definitions.forEach((definition) => {
     let token, binding;
     if (isArray(definition)) {
@@ -19,6 +18,7 @@ export function addBindings(bindingMap: Map<Token, Function>, definitions: any[]
     } else {
       token = binding = definition;
     }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     bindingMap.set(token, binding[IS_BINDING] ? binding : toClass(binding));
   });

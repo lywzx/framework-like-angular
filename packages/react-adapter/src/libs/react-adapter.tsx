@@ -1,8 +1,8 @@
-import { BootstrapAdapter, Inject, INJECT_EXISTS_MODULE_KEY } from '@framework-like-angular/core';
-import { InjectConfig } from '@framework-like-angular/core';
+import { BootstrapAdapter, Inject, INJECT_EXISTS_MODULE_KEY, InjectConfig } from '@framework-like-angular/core';
 import React, { createElement } from 'react';
 import { InjectorComponent, InjectorContext } from '../components/injector.component';
-import { isFunction, isObject } from 'lodash';
+import isFunction from 'lodash/isFunction';
+import isObject from 'lodash/isObject';
 import { addBindings } from '../util/bindings';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import ReactDOM from 'react-dom';

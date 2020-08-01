@@ -1,4 +1,4 @@
-import { AnyAction, combineReducers } from 'redux';
+import { AnyAction } from 'redux';
 import {
   ADD_TODO,
   CHANGE_TODO,
@@ -22,7 +22,7 @@ export function todos(state: TodoInterface[] = [], action: AnyAction): TodoInter
         },
       ];
     case TOGGLE_TODO:
-      return state.map((todo, index) => {
+      return state.map((todo) => {
         if (todo.id === action.id) {
           return Object.assign({}, todo, {
             completed: !todo.completed,
@@ -31,7 +31,7 @@ export function todos(state: TodoInterface[] = [], action: AnyAction): TodoInter
         return todo;
       });
     case CHANGE_TODO: {
-      return state.map((todo, index) => {
+      return state.map((todo) => {
         if (todo.id === action.id) {
           return Object.assign({}, todo, {
             text: action.text,

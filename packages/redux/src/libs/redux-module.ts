@@ -1,5 +1,6 @@
 import { FactoryCore, Module, MODULE_INIT, ModuleOptions, Type } from '@framework-like-angular/core';
-import { flatten, isFunction } from 'lodash';
+import flatten from 'lodash/flatten';
+import isFunction from 'lodash/isFunction';
 import { DEFAULT_REDUCER, REDUX_SERVICE_TOKEN, REDUX_STORE } from '../constant';
 import { ReduxBootstrapService } from '../services/redux-bootstrap.service';
 import { createStore, Reducer, Store } from 'redux';

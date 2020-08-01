@@ -1,0 +1,26 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "module": "commonjs",
+    "baseUrl": ".",
+    "declaration": false,
+    "paths": {
+      "@framework-like-angular/core": [
+        "../packages/core/src"
+      ],
+      "@framework-like-angular/react-adapter": [
+        "../packages/react-adapter/src"
+      ],
+      "@framework-like-angular/redux": [
+        "../packages/redux/src"
+      ],
+      "@framework-like-angular/vue-adapter": [
+        "../packages/vue-adapter/src"
+      ]
+    }
+  },
+  "include": ["react-todo-mvc", "react-todo-mvc-with-ioc"]
+}

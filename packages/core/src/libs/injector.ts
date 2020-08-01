@@ -2,7 +2,7 @@ import { INJECT_KEY, INJECTABLE_KEY, OPTIONAL_KEY } from '../constant';
 import { IInjectorMapValue, InjectFactoryInterface, InjectParamsType, InjectToken, Type } from '../interfaces';
 import { CircleDependenceException, NotInjectableException } from '../exceptions';
 import { InjectReflectOptionalInterface, InjectReflectValueInterface } from '../decorator';
-import { keyBy } from 'lodash';
+import keyBy from 'lodash/keyBy';
 import { getInjectName } from '../util';
 import { getProviders } from '../util/tools';
 

@@ -19,6 +19,7 @@ export function State(
   options?: { stateName: string; defaultState: any } | string | Type<any>
 ): ClassDecorator & PropertyDecorator & ParameterDecorator {
   const InjectableCallback = Injectable();
+  // eslint-disable-next-line no-unused-vars
   return function (target: JsCoreObject, name?: string | symbol, index?: number) {
     // 参数装饰器
     if (typeof target === 'object') {

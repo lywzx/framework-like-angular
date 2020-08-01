@@ -1,5 +1,6 @@
 import { getProviders } from '../util/tools';
-import { extend, map } from 'lodash';
+import extend from 'lodash/extend';
+import map from 'lodash/map';
 import { ModuleInterface, ModuleOptions, Type } from '../interfaces';
 import { Injector, FactoryCore, BootstrapAdapter } from '../libs';
 import { MODULE_REF, MODULE_INIT } from '../constant';

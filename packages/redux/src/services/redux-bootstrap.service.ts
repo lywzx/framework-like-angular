@@ -3,7 +3,7 @@ import { DEFAULT_REDUCER, REDUX_SERVICE_TOKEN, REDUX_STORE } from '../constant';
 import { AnyAction, combineReducers, Reducer, ReducersMapObject, Store } from 'redux';
 import { ModuleInterface } from '@framework-like-angular/core';
 import { ACTION_CONSTANT, IStateInjectInterface, REDUCER_CONSTANT, STATE_CONSTANT, STATE_INJECT } from '../decorator';
-import { keyBy } from 'lodash';
+import keyBy from 'lodash/keyBy';
 
 @Injectable()
 export class ReduxBootstrapService implements OnModuleInit {

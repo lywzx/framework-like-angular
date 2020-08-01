@@ -12,7 +12,7 @@ export interface ITodoListPropsInterface {
 export function TodoList({ todos, onToggleComplete, onTodoDelete, onTodoEdit }: ITodoListPropsInterface) {
   return (
     <ul className="todo-list">
-      {todos.map((todo, index) => (
+      {todos.map((todo) => (
         <Todo
           key={todo.id}
           {...todo}
