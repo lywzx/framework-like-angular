@@ -1,3 +1,8 @@
+const fs = require('fs');
+const path = require('path');
+
+const lernaPackage = JSON.parse(fs.readFileSync(path.join(__dirname, '../lerna.json')).toString());
+
 const entries = [
   {
     input: 'src/index.ts',
@@ -24,11 +29,55 @@ const entries = [
 ];
 
 const packages = [
-  'core',
-  'react-adapter',
-  'redux',
-  'testing',
-  // 'vue-adapter'
+  {
+    dir: 'core',
+    outputName: 'Fla',
+    banner: `/*!
+ * @framework-like-angular/core v${lernaPackage.version}
+ * (c) ${new Date().getFullYear()} LiuYang
+ * @license MIT
+ */`,
+    external: ['reflect-metadata'],
+  },
+  {
+    dir: 'react-adapter',
+    outputName: 'FlaR',
+    banner: `/*!
+ * @framework-like-angular/react-adapter v${lernaPackage.version}
+ * (c) ${new Date().getFullYear()} LiuYang
+ * @license MIT
+ */`,
+    external: ['react', 'react-dom', '@framework-like-angular/core'],
+    globals: {
+      '@framework-like-angular/core': 'Fla',
+    },
+  },
+  {
+    dir: 'redux',
+    outputName: 'FlaRd',
+    banner: `/*!
+ * @framework-like-angular/redux v${lernaPackage.version}
+ * (c) ${new Date().getFullYear()} LiuYang
+ * @license MIT
+ */`,
+    external: ['redux', '@framework-like-angular/core'],
+    globals: {
+      '@framework-like-angular/core': 'Fla',
+    },
+  },
+  {
+    dir: 'testing',
+    outputName: 'FlaT',
+    banner: `/*!
+ * @framework-like-angular/testing v${lernaPackage.version}
+ * (c) ${new Date().getFullYear()} LiuYang
+ * @license MIT
+ */`,
+    external: ['@framework-like-angular/core'],
+    globals: {
+      '@framework-like-angular/core': 'Fla',
+    },
+  },
 ];
 
 module.exports = {
