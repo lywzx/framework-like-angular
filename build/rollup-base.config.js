@@ -8,8 +8,8 @@ import { terser } from 'rollup-plugin-terser';
 import { readJsonSync } from 'fs-extra';
 import { join } from 'path';
 
-export function createEntries(configs, pkgName, banner) {
-  return configs.map((c) => createEntry(c, pkgName, banner));
+export function createEntries(configs, pkg) {
+  return configs.map((c) => createEntry(c, pkg));
 }
 
 function createEntry(config, pkgName, banner) {
