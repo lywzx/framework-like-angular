@@ -9,7 +9,7 @@ import { readJsonSync } from 'fs-extra';
 import { join } from 'path';
 
 export function createEntries(configs, pkgName, banner) {
-  return configs.map(c => createEntry(c, pkgName, banner));
+  return configs.map((c) => createEntry(c, pkgName, banner));
 }
 
 function createEntry(config, pkgName, banner) {
@@ -20,12 +20,12 @@ function createEntry(config, pkgName, banner) {
       rollupTypescript({
         tsconfig: join(__dirname, '../packages', pkgName, 'tsconfig.json'),
         tsconfigOverride: {
-          include: ["src"],
-          exclude: ["test"],
+          include: ['src'],
+          exclude: ['test'],
           compilerOptions: {
-            "module": "ES6",
-          }
-        }
+            module: 'ES6',
+          },
+        },
       }),
       json(),
     ],
@@ -33,12 +33,14 @@ function createEntry(config, pkgName, banner) {
       banner,
       file: join(__dirname, '../packages', pkgName, config.file),
       format: config.format,
+      globals: {},
     },
     onwarn: (msg, warn) => {
       if (!/Circular/.test(msg)) {
         warn(msg);
       }
     },
+    external: ['vue', 'vuex', 'react', 'react-dom', 'redux'],
   };
 
   if (config.format === 'umd') {
@@ -58,14 +60,12 @@ function createEntry(config, pkgName, banner) {
   if (config.transpile !== false) {
     c.plugins.push(
       buble({
-        transforms: { generator: false }
+        transforms: { generator: false },
       })
     );
   }
 
-  c.plugins.push(
-    resolve({extensions: ['.ts', '.tsx', '.js', '.mjs']})
-  );
+  c.plugins.push(resolve({ extensions: ['.ts', '.tsx', '.js', '.mjs'] }));
   c.plugins.push(
     commonjs({
       transformMixedEsModules: true,
