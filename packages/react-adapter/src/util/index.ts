@@ -1,5 +1,5 @@
 import { Injector } from '@framework-like-angular/core';
-import { INJECTOR } from '../constant/index';
+import { INJECTOR } from '../constant';
 
 let currentInjector: Injector | null = null;
 

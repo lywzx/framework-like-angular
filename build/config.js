@@ -47,7 +47,7 @@ const packages = [
  * (c) ${new Date().getFullYear()} LiuYang
  * @license MIT
  */`,
-    external: ['react', 'react-dom', '@framework-like-angular/core'],
+    external: ['@framework-like-angular/core'],
     globals: {
       '@framework-like-angular/core': 'Fla',
     },
@@ -76,6 +76,9 @@ const packages = [
     external: ['@framework-like-angular/core'],
     globals: {
       '@framework-like-angular/core': 'Fla',
+    },
+    onlyModule: {
+      browser: false,
     },
   },
 ];
