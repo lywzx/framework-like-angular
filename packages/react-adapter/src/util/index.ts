@@ -3,6 +3,10 @@ import { INJECTOR } from '../constant';
 
 let currentInjector: Injector | null = null;
 
+/**
+ * 获取当前的注入器
+ * @param target
+ */
 export function getInjector(target: any): Injector | null {
   let injector = target[INJECTOR];
   if (injector) {
@@ -16,6 +20,9 @@ export function getInjector(target: any): Injector | null {
   return null;
 }
 
+/**
+ * 获取当前实现
+ */
 const registrationQueue: any[] = [];
 export function getInstance(injector: any, token: any) {
   if (registrationQueue.length > 0) {

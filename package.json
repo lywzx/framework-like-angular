@@ -6,7 +6,7 @@
   ],
   "scripts": {
     "dev": "node --max_old_space_size=4096 examples/server.js ",
-    "start": "cross-env node_options=--max_old_space_size=4096 rollup -w -c build/rollup.config.js",
+    "start": "cross-env NODE_OPTIONS=--max_old_space_size=4096 rollup -w -c build/rollup.config.js",
     "build": "node --max_old_space_size=4096 build/build-pkg.js",
     "format": "prettier --write \"packages/**/*.ts\" \"packages/**/*.tsx\" \"examples/**/*.ts\" \"examples/**/*.tsx\"",
     "lint": "eslint \"{packages,examples}/**/*.{ts,tsx}\" --fix",

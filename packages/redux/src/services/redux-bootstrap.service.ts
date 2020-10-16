@@ -5,11 +5,12 @@ import { ModuleInterface } from '@framework-like-angular/core';
 import { ACTION_CONSTANT, IStateInjectInterface, REDUCER_CONSTANT, STATE_CONSTANT, STATE_INJECT } from '../decorator';
 import keyBy from 'lodash/keyBy';
 
+type ReduxStore = Store;
 @Injectable()
 export class ReduxBootstrapService implements OnModuleInit {
   constructor(
     @Inject(REDUX_SERVICE_TOKEN) protected services: Type<any>[],
-    @Inject(REDUX_STORE) protected store: Store,
+    @Inject(REDUX_STORE) protected store: ReduxStore,
     @Inject(MODULE_REF) protected module: ModuleInterface,
     @Inject(DEFAULT_REDUCER) protected reducers: Record<string, Reducer<any, any>>
   ) {}

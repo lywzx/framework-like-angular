@@ -1,6 +1,6 @@
-import { getProviders } from '../util/tools';
 import extend from 'lodash/extend';
 import map from 'lodash/map';
+import filter from 'lodash/filter';
 import { ModuleInterface, ModuleOptions, Type } from '../interfaces';
 import { Injector, FactoryCore, BootstrapAdapter } from '../libs';
 import { MODULE_REF, MODULE_INIT } from '../constant';
@@ -11,7 +11,9 @@ export class InnerModule implements ModuleInterface {
   public options?: ModuleOptions;
 
   constructor(protected target: Type<any>, options?: ModuleOptions) {
-    const provider = getProviders(options && options.providers);
+    const provider = filter((options && options.providers) || [], (it) => {
+      return 'provide' in it && it.provide !== MODULE_REF;
+    });
     provider.push({
       provide: MODULE_REF,
       useValue: this,

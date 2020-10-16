@@ -10,7 +10,8 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "lib": ["es6", "dom"],
-    "sourceMap": true
+    "sourceMap": true,
+    "useDefineForClassFields": false
   },
   "include": ["packages", "examples"]
 }

@@ -33,8 +33,11 @@ export function Inject(inject?: InjectToken): ParameterDecorator & PropertyDecor
     } else {
       const isOptional = true;
       const old = (target as any)[propertyKey];
+      try {
+        delete (target as any)[propertyKey];
+      } catch (e) {}
       // 属性装饰器
-      Object.defineProperty(target, propertyKey, {
+      return {
         get() {
           const realInjector = inject as InjectToken;
           const injector = getComponentInjector(this, (Inject as any)[INJECT_EXISTS_MODULE_KEY] as InjectConfig);
@@ -51,19 +54,19 @@ export function Inject(inject?: InjectToken): ParameterDecorator & PropertyDecor
 
           return instance;
         },
-        set(instance) {
+        set(instance: any) {
           defineProperty(this, propertyKey, {
             enumerable: true,
             writable: true,
             value: instance,
           });
         },
-      });
+      };
     }
   };
 }
 
-Object.defineProperty(Inject, INJECT_EXISTS_MODULE_KEY, {
+defineProperty(Inject, INJECT_EXISTS_MODULE_KEY, {
   enumerable: false,
   configurable: false,
   writable: false,
